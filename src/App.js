@@ -11,6 +11,7 @@ import { Toaster } from 'react-hot-toast';
 import { createUserDocument } from './firebase/firebase.init';
 import { useSelector, useDispatch } from 'react-redux';
 import { togglePreloader } from './redux/preloaderSlice';
+import slideEase from './lib/customEase';
 
 const App = () => {
 
@@ -34,6 +35,11 @@ const App = () => {
       }
     })
   }, [auth])
+
+  useEffect(() => {
+    //Initiate custom ease
+    slideEase()
+  }, [])
 
   return (
     <UserContext.Provider value={user}>
