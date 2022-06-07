@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
+import preloaderReducer from "./preloaderSlice";
 
-export const store = configureStore({
+const store = configureStore({
+    middleware: [logger],
     reducer: {
-        
+        preloader: preloaderReducer,
     }
 })
+
+export default store
