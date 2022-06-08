@@ -16,14 +16,20 @@ import { createUserDocument } from './firebase/firebase.init';
 import { useSelector, useDispatch } from 'react-redux';
 import { togglePreloader } from './redux/preloaderSlice';
 import slideEase from './lib/customEase';
+import Profile from './pages/Profile';
+import { fetchUserData } from './firebase/firebase.init'
+import MenuPanel from './components/MenuPanel.component';
+import { useLocation } from 'react-router';
 
 const App = () => {
 
   const auth = getAuth()
   const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState(null)
 
   const showPreloader = useSelector((state) => state.preloader.show)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(togglePreloader(true))
@@ -31,7 +37,9 @@ const App = () => {
       if (user) {
         createUserDocument(user).then(() => {
           setUser(user)
-          dispatch(togglePreloader(false))
+          fetchUserData(user.uid).then((res) => {
+            setUserData(res)
+          })
         })
       } else {
         setUser(null)
@@ -45,16 +53,25 @@ const App = () => {
     slideEase()
   }, [])
 
+  useEffect(() => {
+    dispatch(togglePreloader(true))
+  }, [location.pathname])
+
   return (
-    <UserContext.Provider value={user}>
-      <div className='App bg-bg_light w-full h-full'>
+    <UserContext.Provider value={{ user, userData }}>
+      <div className='App bg-bg_light w-full h-full flex flex-row'>
         {showPreloader ? <Preloader /> : null}
-        <div><Toaster/></div>
+        <div><Toaster /></div>
         <Header />
+        {
+          user ?
+            <MenuPanel /> : null
+        }
         <Routes>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path='/people' element={<People />}></Route>
+          <Route path='/people/:username' element={<Profile />}></Route>
           <Route path='/projects' element={<Project />}></Route>
           <Route path='/skills' element={<Skills />}></Route>
         </Routes>

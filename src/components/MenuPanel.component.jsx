@@ -13,7 +13,7 @@ const MenuPanel = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="w-fit bg-bg_navy h-screen absolute top-0 left-0 shadow-rightShadow z-[45] flex flex-col">
+        <div className="w-fit bg-bg_navy h-screen sticky top-0 shadow-rightShadow z-[45] flex flex-col">
             <div className="h-fit w-full flex flex-row items-center py-3 px-8 md:py-5 md:px-10 border-b-2 border-b-white">
                 <LogoSVG className="h-12 w-12 cursor-pointer" />
                 <a className={`header-actions text-white ml-4 mr-4 w-fit`} href="/">Connect</a>

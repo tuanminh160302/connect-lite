@@ -44,7 +44,8 @@ export const createUserDocument = async (user) => {
                 displayName,
                 email,
                 photoURL,
-                uid
+                uid,
+                username: user.email.split('@')[0]
             }).then(() => {
                 //
             }) 
@@ -56,15 +57,29 @@ export const createUserDocument = async (user) => {
     }
 }
 
-// export const fetchUserDocument = async (uid) => {
-//     if (!uid) return
-//     const userRef = doc(db, 'users', uid)
-//     const snap = await getDoc(userRef)
-//     if (!snap.exists()) {
-//         return
-//     } else {
-//         console.log(snap)
-//     }
-// }
+export const fetchUserData = async (uid) => {
+    if (!uid) return
+    const userRef = doc(db, 'users', uid)
+    const snap = await getDoc(userRef)
+    if (!snap.exists()) {
+        return
+    } 
+    return snap.data()
+}
+
+export const fetchUserDataByUsername = async(username) => {
+    if (!username) return
+    let res = null
+    const userCollectionRef = collection(db, 'users')
+    const queryUserToBeDisplayed = query(userCollectionRef, where("username", "==", username))
+    await getDocs(queryUserToBeDisplayed).then((querySnapshot) => {
+        if (querySnapshot.size == 1) {
+            querySnapshot.forEach((snap) => {
+                res = snap.data()
+            })
+        }
+    })
+    return res
+}
 
 export default firebaseApp;

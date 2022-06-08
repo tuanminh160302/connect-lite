@@ -8,8 +8,4 @@
     .header-actions {
         @apply text-xs font-medium md:font-semibold text-white
     }
-
-    .container-user-signed-in {
-        @apply w-5/6 float-right
-    }
 }

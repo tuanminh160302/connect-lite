@@ -4,10 +4,10 @@ import { useContext } from "react";
 
 const Login = () => {
 
-    const user = useContext(UserContext)
+    const {user, userData} = useContext(UserContext)
 
     return (
-        <div className={`${user ? 'container-user-signed-in' : 'w-full'} h-screen flex flex-row justify-center items-center`}>
+        <div className={`w-full h-screen flex flex-row justify-center items-center`}>
             <LoginComponent />
         </div>
     )

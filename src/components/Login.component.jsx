@@ -1,20 +1,27 @@
 import { signInWithGoogle } from "../firebase/firebase.init";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../lib/context";
 import { useDispatch } from "react-redux";
 import { togglePreloader } from "../redux/preloaderSlice";
-
+import { useNavigate } from "react-router";
 
 const LoginComponent = () => {
 
-    const user = useContext(UserContext)
+    const {user, userData} = useContext(UserContext)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleLoginRequest = (e) => {
         e.preventDefault()
         signInWithGoogle()
         dispatch(togglePreloader(true))
     }
+
+    useEffect(() => {
+        if (userData) {
+            navigate(`/people/${userData.username}`)
+        }
+    }, [userData])
 
     return (
         <div className="w-80 h-fit bg-bg_navy rounded-3xl shadow-xl shadow-gray-700/40 transition ease-in-out duration-300 flex flex-col items-center
