@@ -2,6 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import People from './pages/People';
+import Project from './pages/Projects';
+import Skills from './pages/Skills';
 import Header from './components/Header.component';
 import Preloader from './components/Preloader';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -49,6 +53,10 @@ const App = () => {
         <Header />
         <Routes>
           <Route path='/login' element={<Login />}></Route>
+          <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route path='/people' element={<People />}></Route>
+          <Route path='/projects' element={<Project />}></Route>
+          <Route path='/skills' element={<Skills />}></Route>
         </Routes>
       </div>
     </UserContext.Provider>

@@ -6,7 +6,7 @@
 
 @layer components {
     .header-actions {
-        @apply text-sm md:text-lg font-medium md:font-semibold text-white
+        @apply text-xs font-medium md:font-semibold text-white
     }
 
     .container-user-signed-in {
