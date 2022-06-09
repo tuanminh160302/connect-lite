@@ -39,6 +39,7 @@ const App = () => {
           setUser(user)
           fetchUserData(user.uid).then((res) => {
             setUserData(res)
+            console.log(res)
           })
         })
       } else {

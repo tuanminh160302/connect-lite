@@ -16,7 +16,6 @@ const Profile = () => {
     const auth = getAuth();
     const [profileData, setProfileData] = useState(null)
     const dispatch = useDispatch()
-    console.log(profileData)
 
     useEffect(() => {
         const pathnameArr = location.pathname.split('/')
