@@ -14,3 +14,38 @@ export const CreateUsers = gql`
         }
     }
 `
+
+export const QuerySkills = gql `
+    query Skills {
+        skills {
+            name
+            photoURL
+            description
+            id
+    }
+}
+`
+
+export const QuerySkill = gql`
+    query Skills($where: SkillWhere) {
+        skills(where: $where) {
+            id
+            name
+            photoURL
+            description
+    }
+}
+`
+
+export const QueryPeople = gql `
+    query Users {
+        users {
+            username
+            email
+            createdAt
+            displayName
+            photoURL
+            uid
+        }
+}
+`

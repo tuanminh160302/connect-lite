@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import People from './pages/People';
 import Project from './pages/Projects';
 import Skills from './pages/Skills';
+import Skill from './pages/Skill'
 import Header from './components/Header.component';
 import Preloader from './components/Preloader';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -28,8 +29,10 @@ const App = () => {
   const auth = getAuth()
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState(null)
-  const [createUserRecord, {data}] = useMutation(CreateUsers)
+  const [createUserRecord, {data, loading, error}] = useMutation(CreateUsers)
 
+  if (loading) console.log('Attempt to create user record')
+ 
   const showPreloader = useSelector((state) => state.preloader.show)
   const dispatch = useDispatch()
   const location = useLocation()
@@ -41,12 +44,11 @@ const App = () => {
         createUserDocument(user).then(() => {
           setUser(user)
           fetchUserData(user.uid).then((res) => {
-            console.log()
             setUserData(res)
             createUserRecord({variables: {input: res}}).then(() => {
               console.log(res)
               dispatch(togglePreloader(false))
-            })
+            }).catch(err => {})
           })
         })
       } else {
@@ -67,7 +69,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ user, userData }}>
-      <div className='App bg-bg_light w-full h-full flex flex-row'>
+      <div className='App bg-bg_light w-full h-fit flex flex-row'>
         {showPreloader ? <Preloader /> : null}
         <div><Toaster /></div>
         <Header />
@@ -82,6 +84,7 @@ const App = () => {
           <Route path='/people/:username' element={<Profile />}></Route>
           <Route path='/projects' element={<Project />}></Route>
           <Route path='/skills' element={<Skills />}></Route>
+          <Route path='/skills/:skill' element={<Skill />}></Route>
         </Routes>
       </div>
     </UserContext.Provider>
