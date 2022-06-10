@@ -20,12 +20,15 @@ import Profile from './pages/Profile';
 import { fetchUserData } from './firebase/firebase.init'
 import MenuPanel from './components/MenuPanel.component';
 import { useLocation } from 'react-router';
+import { useMutation } from '@apollo/client';
+import { CreateUsers } from './graphql';
 
 const App = () => {
 
   const auth = getAuth()
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState(null)
+  const [createUserRecord, {data}] = useMutation(CreateUsers)
 
   const showPreloader = useSelector((state) => state.preloader.show)
   const dispatch = useDispatch()
@@ -38,8 +41,12 @@ const App = () => {
         createUserDocument(user).then(() => {
           setUser(user)
           fetchUserData(user.uid).then((res) => {
+            console.log()
             setUserData(res)
-            console.log(res)
+            createUserRecord({variables: {input: res}}).then(() => {
+              console.log(res)
+              dispatch(togglePreloader(false))
+            })
           })
         })
       } else {
