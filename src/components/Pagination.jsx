@@ -19,6 +19,10 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
         setPageCount(Math.ceil(items.length / itemsPerPage));
     }, [itemOffset, itemsPerPage, items]);
 
+    useEffect(() => {
+        setItemOffset(0)
+    }, [items])
+
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
@@ -38,8 +42,12 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
                             switch(target){
                                 case 'skills':
                                     navigate(`/skills/${item.id}`)
+                                    break
                                 case 'people':
                                     navigate(`/people/${item.username}`)
+                                    break
+                                default:
+                                    return null
                             }
                         }
                         
