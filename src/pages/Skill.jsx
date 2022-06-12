@@ -15,7 +15,7 @@ const Skill = () => {
     const skill = location.pathname.split("/")[location.pathname.split("/").length - 1]
 
     const skillres = useQuery(QuerySkill, { variables: { where: { id: skill } } })
-    const relatedSkillRes = useQuery(QueryRelatedSkills, {variables: {where: {id: skill}}})
+    const relatedSkillRes = useQuery(QueryRelatedSkills, { variables: { where: { id: skill } } })
 
     useEffect(() => {
         setTimeout(() => {
@@ -29,8 +29,10 @@ const Skill = () => {
     }
 
     const relatedSkill = relatedSkillRes.data && relatedSkillRes.data.skills[0].skillIn.hasSkill.map((data) => {
-        return(
-            <img key={data.id} onClick={(e) => {handleRedirectSkill(e)}} className="rounded-full h-16 w-16 cursor-pointer mb-4 mr-4" draggable={false} src={data.photoURL} alt={data.id} />
+        return (
+            <>
+                {data.id !== skill && <img key={data.id} onClick={(e) => { handleRedirectSkill(e) }} className="rounded-full h-16 w-16 cursor-pointer mb-4 mr-4" draggable={false} src={data.photoURL} alt={data.id} />}
+            </>
         )
     })
 
