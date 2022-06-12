@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux"
 import { togglePreloader } from "../redux/preloaderSlice"
 import DefaultModal from "../components/DefaultModal.component"
 import { ReactComponent as EditSVG } from '../assets/edit.svg'
+import { useQuery } from "@apollo/client/react"
+import { QueryUser } from "../graphql"
 
 const Profile = () => {
 
@@ -16,17 +18,18 @@ const Profile = () => {
     const auth = getAuth();
     const [profileData, setProfileData] = useState(null)
     const dispatch = useDispatch()
+    const pathnameArr = location.pathname.split('/')
+    const profileUsername = pathnameArr[pathnameArr.length - 1]
+    const {loadng, error, data} = useQuery(QueryUser, {variables: {where: {username: profileUsername}}})
 
     useEffect(() => {
-        const pathnameArr = location.pathname.split('/')
-        const profileUsername = pathnameArr[pathnameArr.length - 1]
-        fetchUserDataByUsername(profileUsername).then((profileData) => {
-            setProfileData(profileData)
+        if (data) {
+            setProfileData(data.users[0])
             setTimeout(() => {
                 dispatch(togglePreloader(false))
             }, 500)
-        })
-    }, [location.pathname])
+        }
+    }, [location.pathname, data])
 
     return (
         <div className="w-full h-fit px-32 py-28">

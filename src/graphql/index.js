@@ -15,7 +15,7 @@ export const CreateUsers = gql`
     }
 `
 
-export const QuerySkills = gql `
+export const QuerySkills = gql`
     query Skills {
         skills {
             name
@@ -37,7 +37,7 @@ export const QuerySkill = gql`
 }
 `
 
-export const QueryPeople = gql `
+export const QueryPeople = gql`
     query Users {
         users {
             username
@@ -47,5 +47,33 @@ export const QueryPeople = gql `
             photoURL
             uid
         }
+}
+`
+
+export const QueryUser = gql`
+    query Users($where: UserWhere) {
+        users(where: $where) {
+            username
+            email
+            createdAt
+            displayName
+            photoURL
+            uid
+        }
+    }
+`
+
+export const QueryRelatedSkills = gql`
+query Skills($where: SkillWhere) {
+  skills(where: $where) {
+    skillIn {
+      hasSkill {
+        name
+        photoURL
+        description
+        id
+      }
+    }
+  }
 }
 `

@@ -52,7 +52,7 @@ const People = () => {
                             </div>
                         </div>
                         <Pagination
-                            itemsPerPage={15}
+                            itemsPerPage={6}
                             items={items}
                             paginationStyle="w-full h-fit text-white"
                             target="people"
