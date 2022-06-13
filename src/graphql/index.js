@@ -105,3 +105,15 @@ query HasSkill($where: UserWhere) {
   }
 }
 `
+
+export const QueryUserToSkill = gql`
+query Users($where: UserWhere, $hasSkillConnectionWhere2: UserHasSkillConnectionWhere) {
+  users(where: $where) {
+    hasSkillConnection(where: $hasSkillConnectionWhere2) {
+      edges {
+        level
+      }
+    }
+  }
+}
+`

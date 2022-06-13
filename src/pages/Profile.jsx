@@ -7,7 +7,7 @@ import PaginationHeader from "../components/PaginationHeader.component"
 import Pagination from "../components/Pagination"
 import { useDispatch } from "react-redux"
 import { togglePreloader } from "../redux/preloaderSlice"
-import { togglePopUp } from "../redux/popUp.slice"
+import { toggleAddSkill } from "../redux/popUp.slice"
 import DefaultModal from "../components/DefaultModal.component"
 import { ReactComponent as EditSVG } from '../assets/edit.svg'
 import { useQuery } from "@apollo/client/react"
@@ -38,7 +38,7 @@ const Profile = () => {
     }, [location.pathname, data])
 
     const handleAddSkill = () => {
-        dispatch(togglePopUp(true))
+        dispatch(toggleAddSkill(true))
     }
 
     return (

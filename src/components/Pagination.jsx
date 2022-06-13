@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux/es/exports";
+import { toggleEditSkill } from "../redux/popUp.slice";
 
 const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating }) => {
     // We start with an empty list of items.
@@ -11,6 +13,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
     // following the API or data you're working with.
     const [itemOffset, setItemOffset] = useState(0);
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         // Fetch items from another resources.
@@ -66,27 +69,32 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
                             }
                         }
 
+                        const handleEditSkill = (e) => {
+                            dispatch(toggleEditSkill([true, e.target.id]))
+                        }
+
                         return (
                             <div className="bg-bg_navy w-full h-32 border-b-2 border-gray-300 flex flex-row items-center" key={index}>
                                 <div className="px-8 py-5 border-r-2 border-gray-300 h-full flex items-center">
                                     <img className="h-14 w-14" src={item.photoURL} alt="" />
                                 </div>
                                 <div className={`p-5 ${target.includes('skills') ? 'w-[10%]' : 'w-[15%]'} border-r-2 border-gray-300 h-full flex items-center`}>
-                                    <p className="font-bold cursor-pointer" onClick={() => { handleNavigateSkill() }}>
+                                    <p className="font-bold cursor-pointer text-sm" onClick={() => { handleNavigateSkill() }}>
                                         {target.includes('skills') ? item.name : target == "people" ? item.displayName : item.projectName}
                                     </p>
                                 </div>
                                 <div className="p-5 w-[35%] border-r-2 border-gray-300 h-full flex items-center">
-                                    <p>{target.includes('skills') ? item.description : target == "people" ? item.bio : item.description}</p>
+                                    <p className="text-sm">{target.includes('skills') ? item.description : target == "people" ? item.bio : item.description}</p>
                                 </div>
                                 {
                                     skillsRating ?
                                         <>
                                             <div className="p-5 w-[13%] border-r-2 border-gray-300 h-full flex items-center">
-                                                <p className="text-white flex justify-center items-center">{convertRatingToString(currentRatings[index])}</p>
+                                                <p className="text-white flex justify-center items-center text-sm">{convertRatingToString(currentRatings[index])}</p>
                                             </div>
                                             <div className="p-5 w-[10%] border-r-2 border-gray-300 h-full flex items-center">
-                                                <p className="text-white flex justify-center items-center font-semibold cursor-pointer">Edit skill</p>
+                                                <p id={item.id} className="text-white flex justify-center items-center text-sm font-semibold cursor-pointer"
+                                                    onClick={(e) => {handleEditSkill(e)}}>Edit skill</p>
                                             </div>
                                         </> :
                                         null
