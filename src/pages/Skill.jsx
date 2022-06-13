@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, Fragment } from "react"
 import { useDispatch } from "react-redux"
 import { togglePreloader } from "../redux/preloaderSlice"
 import { useQuery } from "@apollo/client"
@@ -30,9 +30,9 @@ const Skill = () => {
 
     const relatedSkill = relatedSkillRes.data && relatedSkillRes.data.skills[0].skillIn.hasSkill.map((data) => {
         return (
-            <>
-                {data.id !== skill && <img key={data.id} onClick={(e) => { handleRedirectSkill(e) }} className="rounded-full h-16 w-16 cursor-pointer mb-4 mr-4" draggable={false} src={data.photoURL} alt={data.id} />}
-            </>
+            <Fragment key={data.id}>
+                {data.id !== skill && <img onClick={(e) => { handleRedirectSkill(e) }} className="rounded-full h-16 w-16 cursor-pointer mb-4 mr-4" draggable={false} src={data.photoURL} alt={data.id} />}
+            </Fragment>
         )
     })
 
