@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import { useNavigate } from "react-router";
 
-const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
+const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating }) => {
     // We start with an empty list of items.
     const [currentItems, setCurrentItems] = useState(null);
+    const [currentRatings, setCurrentRatings] = useState(null)
     const [pageCount, setPageCount] = useState(0);
     // Here we use item offsets; we could also use page offsets
     // following the API or data you're working with.
@@ -16,6 +17,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
         const endOffset = itemOffset + itemsPerPage;
         // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentItems(items.slice(itemOffset, endOffset));
+        skillsRating && setCurrentRatings(skillsRating.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(items.length / itemsPerPage));
     }, [itemOffset, itemsPerPage, items]);
 
@@ -37,10 +39,10 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
             <>
                 {currentItems &&
                     currentItems.map((item, index) => {
-    
+
                         const handleNavigateSkill = () => {
-                            switch(target){
-                                case 'skills':
+                            switch (target) {
+                                case 'skills': case 'skills-profile':
                                     navigate(`/skills/${item.id}`)
                                     break
                                 case 'people':
@@ -50,20 +52,45 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
                                     return null
                             }
                         }
-                        
+
+                        const convertRatingToString = (rating) => {
+                            switch (rating) {
+                                case 1:
+                                    return "Knowledgable"
+                                case 2:
+                                    return "Proficient"
+                                case 3:
+                                    return "Lead/Teach"
+                                default:
+                                    return null
+                            }
+                        }
+
                         return (
                             <div className="bg-bg_navy w-full h-32 border-b-2 border-gray-300 flex flex-row items-center" key={index}>
                                 <div className="px-8 py-5 border-r-2 border-gray-300 h-full flex items-center">
                                     <img className="h-14 w-14" src={item.photoURL} alt="" />
                                 </div>
-                                <div className="p-5 w-[15%] border-r-2 border-gray-300 h-full flex items-center">
-                                    <p className="font-bold cursor-pointer" onClick={() => {handleNavigateSkill()}}>
-                                        {target=="skills" ? item.name : target=="people" ? item.displayName : item.projectName}
+                                <div className={`p-5 ${target.includes('skills') ? 'w-[10%]' : 'w-[15%]'} border-r-2 border-gray-300 h-full flex items-center`}>
+                                    <p className="font-bold cursor-pointer" onClick={() => { handleNavigateSkill() }}>
+                                        {target.includes('skills') ? item.name : target == "people" ? item.displayName : item.projectName}
                                     </p>
                                 </div>
                                 <div className="p-5 w-[35%] border-r-2 border-gray-300 h-full flex items-center">
-                                    <p>{target=="skills" ? item.description : target=="people" ? item.bio : item.description}</p>
+                                    <p>{target.includes('skills') ? item.description : target == "people" ? item.bio : item.description}</p>
                                 </div>
+                                {
+                                    skillsRating ?
+                                        <>
+                                            <div className="p-5 w-[13%] border-r-2 border-gray-300 h-full flex items-center">
+                                                <p className="text-white flex justify-center items-center">{convertRatingToString(currentRatings[index])}</p>
+                                            </div>
+                                            <div className="p-5 w-[10%] border-r-2 border-gray-300 h-full flex items-center">
+                                                <p className="text-white flex justify-center items-center font-semibold cursor-pointer">Edit skill</p>
+                                            </div>
+                                        </> :
+                                        null
+                                }
                             </div>
                         )
                     })}
@@ -73,7 +100,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target }) => {
 
     return (
         <div className={paginationStyle}>
-            <Items currentItems={currentItems} target={target}/>
+            <Items currentItems={currentItems} target={target} />
             <ReactPaginate className="flex flex-row w-fit bg-bg_navy float-right mt-5"
                 breakLabel="..."
                 nextLabel="Next"

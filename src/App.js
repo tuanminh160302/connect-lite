@@ -31,7 +31,7 @@ const App = () => {
   const [userData, setUserData] = useState(null)
   const [createUserRecord, {data, loading, error}] = useMutation(CreateUsers)
 
-  if (loading) console.log('Attempt to create user record')
+  if (loading) console.log('Creating/Updating/Merging user record')
  
   const showPreloader = useSelector((state) => state.preloader.show)
   const dispatch = useDispatch()

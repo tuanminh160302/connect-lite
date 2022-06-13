@@ -4,6 +4,7 @@ import { togglePreloader } from "../redux/preloaderSlice"
 import Pagination from "../components/Pagination"
 import { useQuery } from '@apollo/client';
 import { QuerySkills } from '../graphql/index'
+import PaginationHeader from "../components/PaginationHeader.component";
 
 const Skills = () => {
 
@@ -44,11 +45,7 @@ const Skills = () => {
                     <>
                         <div className="z-10 sticky top-0 pt-28 bg-bg_light">
                             <input className="py-2 px-3 mb-5 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
-                            <div className="w-full h-20 border-b-2 bg-bg_navy_dark border-gray-300 flex flex-row items-center">
-                                <div className="px-8 py-5 border-r-2 border-gray-300 h-full flex items-center"><p className="text-white w-14 flex justify-center items-center">Logo</p></div>
-                                <div className="p-5 w-[15%] border-r-2 border-gray-300 h-full flex items-center"><p className="text-white flex justify-center items-center">Name</p></div>
-                                <div className="p-5 w-[35%] border-r-2 border-gray-300 h-full flex items-center"><p className="text-white flex justify-center items-center">Description</p></div>
-                            </div>
+                            <PaginationHeader target="skills" />
                         </div>
                         <Pagination
                             itemsPerPage={6}

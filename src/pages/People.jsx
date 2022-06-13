@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { togglePreloader } from "../redux/preloaderSlice"
+import PaginationHeader from "../components/PaginationHeader.component";
 import Pagination from "../components/Pagination"
 import { useQuery } from '@apollo/client';
 import { QueryPeople } from '../graphql/index'
@@ -45,11 +46,7 @@ const People = () => {
                     <>
                         <div className="z-10 sticky top-0 pt-28 bg-bg_light">
                             <input className="py-2 px-3 mb-5 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
-                            <div className="w-full h-20 border-b-2 bg-bg_navy_dark border-gray-300 flex flex-row items-center">
-                                <div className="px-8 py-5 border-r-2 border-gray-300 h-full flex items-center"><p className="text-white w-14 flex justify-center items-center">Avatar</p></div>
-                                <div className="p-5 w-[15%] border-r-2 border-gray-300 h-full flex items-center"><p className="text-white flex justify-center items-center">Name</p></div>
-                                <div className="p-5 w-[35%] border-r-2 border-gray-300 h-full flex items-center"><p className="text-white flex justify-center items-center">Bio</p></div>
-                            </div>
+                            <PaginationHeader target="people" />
                         </div>
                         <Pagination
                             itemsPerPage={6}

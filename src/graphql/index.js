@@ -77,3 +77,31 @@ query Skills($where: SkillWhere) {
   }
 }
 `
+
+export const updateUserToSkill = gql`
+mutation UpdateUsers($where: UserWhere, $connect: UserConnectInput) {
+  updateUsers(where: $where, connect: $connect) {
+    users {
+      username
+    }
+  }
+}
+`
+
+export const QueryUserAllSkills = gql`
+query HasSkill($where: UserWhere) {
+  users(where: $where) {
+    hasSkillConnection {
+      edges {
+        node {
+          name
+          photoURL
+          description
+          id
+        }
+        level
+      }
+    }
+  }
+}
+`
