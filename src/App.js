@@ -45,6 +45,7 @@ const App = () => {
         createUserDocument(user).then(() => {
           setUser(user)
           fetchUserData(user.uid).then((res) => {
+            console.log(res)
             setUserData(res)
             createUserRecord({variables: {input: res}}).then(() => {
               console.log(res)

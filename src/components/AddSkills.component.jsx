@@ -48,12 +48,12 @@ const AddSkills = ({ target, profileData }) => {
     }, [skillsData.data])
 
     useEffect(() => {
-        handleExitAddSkill()
-    }, [showAddSkill == false])
+        !showAddSkill && handleExitAddSkill()
+    }, [showAddSkill])
 
     useEffect(() => {
-        handleExitEditSkill()
-    }, [showEditSkill == false])
+        !showEditSkill && handleExitEditSkill()
+    }, [showEditSkill])
 
     const handleExitAddSkill = () => {
         setSelectedSkill("")
@@ -85,7 +85,7 @@ const AddSkills = ({ target, profileData }) => {
                 setSkillLevel(res.data.users[0].hasSkillConnection.edges[0].level)
             })
         }
-    }, [showEditSkill == true])
+    }, [showEditSkill])
 
     const handleCreateUserToSkill = () => {
         querySkill({ variables: { where: { name: selectedSkill } } }).then((res) => {
