@@ -42,11 +42,11 @@ const Header = () => {
     }, [location.pathname])
 
     return (
-        <div className="w-full h-fit py-3 px-8 md:py-5 md:px-10 flex flex-row-reverse justify-between items-center fixed top-0 left-0 z-40 bg-transparent">
+        <div className="w-full h-fit py-3 px-8 md:py-6 md:px-10 flex flex-row-reverse justify-between items-center fixed top-0 left-0 z-40 bg-bg_navy">
             {
                 !user ?
                     <a href="/login"><button className="bg-bg_navy px-4 py-2 rounded header-actions">Login</button></a> :
-                    <div className="rounded-full box-border h-10 w-10 relative">
+                    <div className="rounded-full box-border h-12 w-12 relative">
                         <img className="rounded-full h-full w-full cursor-pointer" src={user.photoURL} alt="avatar" onClick={() => { handleToggleModal() }} />
                         {/* {showProfileModal && <div ref={profileModal} className="mt-3 h-80 w-64 bg-bg_navy shadow-xl shadow-cyan-900/40 absolute right-0 rounded-xl"></div>} */}
                         <div ref={profileModal} className="mt-3 h-fit w-fit bg-bg_navy shadow-sm shadow-cyan-900/30 absolute right-0 rounded-xl origin-top scale-y-0">

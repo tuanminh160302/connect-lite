@@ -78,7 +78,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
                                 <div className="px-8 py-5 border-r-2 border-gray-300 h-full flex items-center">
                                     <img className="h-14 w-14" src={item.photoURL} alt="" />
                                 </div>
-                                <div className={`p-5 ${target.includes('skills') ? 'w-[10%]' : 'w-[15%]'} border-r-2 border-gray-300 h-full flex items-center`}>
+                                <div className={`p-5 ${target.includes('skills') ? 'w-[13%]' : 'w-[16%]'} border-r-2 border-gray-300 h-full flex items-center`}>
                                     <p className="font-bold cursor-pointer text-sm" onClick={() => { handleNavigateSkill() }}>
                                         {target.includes('skills') ? item.name : target == "people" ? item.displayName : item.projectName}
                                     </p>

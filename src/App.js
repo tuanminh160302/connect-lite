@@ -9,6 +9,7 @@ import Skills from './pages/Skills';
 import Skill from './pages/Skill'
 import Header from './components/Header.component';
 import Preloader from './components/Preloader';
+import Admin from './pages/Admin';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { UserContext } from './lib/context';
 import { useState, useEffect } from 'react';
@@ -85,6 +86,7 @@ const App = () => {
           <Route path='/projects' element={<Project />}></Route>
           <Route path='/skills' element={<Skills />}></Route>
           <Route path='/skills/:skill' element={<Skill />}></Route>
+          <Route path='/admin' element={<Admin />}></Route>
         </Routes>
       </div>
     </UserContext.Provider>

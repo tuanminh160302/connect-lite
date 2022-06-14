@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useDispatch } from "react-redux"
 import { togglePreloader } from "../redux/preloaderSlice"
 import Pagination from "../components/Pagination"
 import { useQuery } from '@apollo/client';
 import { QuerySkills } from '../graphql/index'
 import PaginationHeader from "../components/PaginationHeader.component";
+import { UserContext } from "../lib/context";
 
 const Skills = () => {
 
@@ -14,6 +15,7 @@ const Skills = () => {
     const dispatch = useDispatch()
     const { loading, error, data } = useQuery(QuerySkills)
     const [searchValue, setSearchValue] = useState('')
+    const { user, userData } = useContext(UserContext)
 
     useEffect(() => {
         setTimeout(() => {
@@ -39,24 +41,32 @@ const Skills = () => {
     }
 
     return (
-        <div className="w-full h-fit px-12 pb-28">
+        <>
             {
-                items ?
-                    <>
-                        <div className="z-10 sticky top-0 pt-28 bg-bg_light">
-                            <input className="py-2 px-3 mb-5 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
-                            <PaginationHeader target="skills" />
-                        </div>
-                        <Pagination
-                            itemsPerPage={6}
-                            items={items}
-                            paginationStyle="w-full h-fit text-white"
-                            target="skills"
-                        />
-                    </>
-                    : null
+                user ?
+                    <div className="w-full h-fit px-12 pb-28">
+                        {
+                            items ?
+                                <>
+                                    <div className="z-10 sticky top-0 pt-28 bg-bg_light">
+                                        <input className="py-2 px-3 mb-5 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
+                                        <PaginationHeader target="skills" />
+                                    </div>
+                                    <Pagination
+                                        itemsPerPage={6}
+                                        items={items}
+                                        paginationStyle="w-full h-fit text-white"
+                                        target="skills"
+                                    />
+                                </>
+                                : null
+                        }
+                    </div> :
+                    <div className="w-screen h-screen px-12 pb-28 flex flex-row items-center justify-center">
+                        <a className="bg-bg_navy px-6 py-4 cursor-pointer text-sm font-medium text-white rounded-lg" href="/login">Login to view this content</a>
+                    </div>
             }
-        </div>
+        </>
     )
 }
 

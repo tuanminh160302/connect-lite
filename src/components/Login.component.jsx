@@ -4,8 +4,6 @@ import { UserContext } from "../lib/context";
 import { useDispatch } from "react-redux";
 import { togglePreloader } from "../redux/preloaderSlice";
 import { useNavigate } from "react-router";
-import { useQuery } from "@apollo/client";
-import { CreateUsers } from "../graphql/index";
 
 const LoginComponent = () => {
 

@@ -117,3 +117,32 @@ query Users($where: UserWhere, $hasSkillConnectionWhere2: UserHasSkillConnection
   }
 }
 `
+
+export const DeleteUserToSkill = gql`
+mutation UpdateUsers($disconnect: UserDisconnectInput, $where: UserWhere) {
+  updateUsers(disconnect: $disconnect, where: $where) {
+    info {
+      relationshipsDeleted
+      nodesDeleted
+    }
+  }
+}
+`
+
+export const QueryAdmin = gql`
+query Admins {
+  admins {
+    uid
+  }
+}
+`
+
+export const CreateJobRole = gql`
+mutation CreateJobRoles($input: [JOB_ROLECreateInput!]!) {
+  createJobRoles(input: $input) {
+    info {
+      nodesCreated
+    }
+  }
+}
+`

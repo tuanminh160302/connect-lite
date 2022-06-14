@@ -2,11 +2,11 @@ import { useState, useEffect } from "react"
 import PopUpModal from "./PopupModal.component"
 import { ReactComponent as DeleteSVG } from '../assets/x.svg'
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client/react"
-import { QueryUser, QueryUserAllSkills, updateUserToSkill, QuerySkills, QuerySkill, QueryUserToSkill } from "../graphql"
+import { QueryUser, QueryUserAllSkills, updateUserToSkill, QuerySkills, QuerySkill, QueryUserToSkill, DeleteUserToSkill } from "../graphql"
 import { useLocation } from "react-router"
 import { successToast, errorToast } from "../lib/toast"
 import { useDispatch, useSelector } from "react-redux/es/exports"
-import { toggleAddSkill } from "../redux/popUp.slice"
+import { toggleAddSkill, toggleEditSkill } from "../redux/popUp.slice"
 
 const AddSkills = ({ target, profileData }) => {
 
@@ -24,11 +24,16 @@ const AddSkills = ({ target, profileData }) => {
     const [selectedSkill, setSelectedSkill] = useState("")
     const [skillLevel, setSkillLevel] = useState(0)
     const [skillToEditData, setSkillToEditData] = useState(null)
-    
-    const skillsData = useQuery(QuerySkills)
-    const [querySkill] = useLazyQuery(QuerySkill)
-    const [queryUserToSkill] = useLazyQuery(QueryUserToSkill)
 
+    const skillsData = useQuery(QuerySkills)
+    const [querySkill] = useLazyQuery(QuerySkill, { variables: { where: { id: skillToEdit } } })
+    const [queryUserToSkill] = useLazyQuery(QueryUserToSkill, { variables: { where: { uid: profileData.uid }, hasSkillConnectionWhere2: { node: { id: skillToEdit } } } })
+    const [deleteUserToSkill, deleteUserToSkillData] = useMutation(DeleteUserToSkill, {
+        refetchQueries: () => [{
+            query: QueryUserAllSkills,
+            variables: { where: { username: profileUsername } }
+        }]
+    })
     const [createUserToSkill, userToSkillData] = useMutation(updateUserToSkill, {
         refetchQueries: () => [{
             query: QueryUserAllSkills,
@@ -43,15 +48,11 @@ const AddSkills = ({ target, profileData }) => {
     }, [skillsData.data])
 
     useEffect(() => {
-        return () => {
-            handleExitAddSkill()
-        }
+        handleExitAddSkill()
     }, [showAddSkill == false])
 
     useEffect(() => {
-        return () => {
-            handleExitEditSkill()
-        }
+        handleExitEditSkill()
     }, [showEditSkill == false])
 
     const handleExitAddSkill = () => {
@@ -74,11 +75,13 @@ const AddSkills = ({ target, profileData }) => {
 
     useEffect(() => {
         if (showEditSkill) {
-            querySkill({ variables: { where: { id: skillToEdit } } }).then((res) => {
+            querySkill().then((res) => {
                 setSkillToEditData(res.data)
                 setSelectedSkill(res.data.skills[0].name)
             })
-            queryUserToSkill({ variables: { where: { uid: profileData.uid }, hasSkillConnectionWhere2: {node:{id: skillToEdit}} } }).then((res) => {
+            queryUserToSkill().then((res) => {
+                console.log(res)
+                console.log(res.data.users[0].hasSkillConnection.edges[0].level)
                 setSkillLevel(res.data.users[0].hasSkillConnection.edges[0].level)
             })
         }
@@ -103,6 +106,14 @@ const AddSkills = ({ target, profileData }) => {
     const handleSelectLevel = (e) => {
         e.preventDefault()
         setSkillLevel(parseInt(e.target.id))
+    }
+
+    const handleDeleteSkill = () => {
+        deleteUserToSkill({variables: {where: {uid: profileData.uid}, disconnect: {hasSkill: [{where: {node: {name: selectedSkill}}}]}}}).then((res) => {
+            console.log(res.data)
+            successToast("Skill deleted")
+            dispatch(toggleEditSkill(false))
+        }).catch(err => console.log(err))
     }
 
     const allSkills = skillsFiltered ? skillsFiltered.map((skill) => {
@@ -164,8 +175,6 @@ const AddSkills = ({ target, profileData }) => {
                                         <>
                                             <div className="relative">
                                                 <p className='text-sm text-white'>{skillToEditData.skills[0].name}</p>
-                                                {selectedSkill && <DeleteSVG className="h-7 w-7 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-600"
-                                                    onClick={() => { setSelectedSkill(""); setSkillsFiltered(skillsData.data.skills) }} />}
                                             </div>
                                             <div className="w-full h-fit flex flex-row justify-between text-sm font-medium mt-4">
                                                 <p id='1' className={`p-2 border-2 border-white cursor-pointer 
@@ -178,9 +187,14 @@ const AddSkills = ({ target, profileData }) => {
                     ${skillLevel != '3' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
                                                     onClick={(e) => { handleSelectLevel(e) }}>Lead/Teach</p>
                                             </div>
-                                            <button
-                                                className="border-2 border-white text-white text-sm font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
-                                                onClick={() => handleCreateUserToSkill()}>Add</button>
+                                            <div>
+                                                <button
+                                                    className="border-2 border-white text-white text-sm font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
+                                                    onClick={() => {handleCreateUserToSkill()}}>Update</button>
+                                                <button
+                                                    className="border-2 border-white text-white text-sm font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
+                                                    onClick={() => {handleDeleteSkill()}}>Delete</button>
+                                            </div>
                                         </> : <p>Loading...</p>
                                 }
                             </>
