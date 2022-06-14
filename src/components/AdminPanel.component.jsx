@@ -8,7 +8,7 @@ const AdminPanel = ({target, action}) => {
         <>
             <PopUpModal className="text-white text-sm" content={
                 <>
-                    <p className="text-base font-medium mb-4">{action} {target}</p>
+                    <p className="text-sm font-medium mb-4">{action} {target}</p>
                     {target=="user" && action=="Create" && <CreateUser />}
                     {target=="user" && action=="Delete" && <DeleteUser />}
                     {target=="skill" && action=="Create" && <CreateSkill />}

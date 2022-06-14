@@ -36,9 +36,9 @@ const DeleteUserComponent = () => {
     const handleDeleteUsers = (e) => {
         e.preventDefault()
         selectedUsers.map((user) => {
-            deleteUser({variables: {where: {uid: user.uid}}}).then((res) => {
+            deleteUser({ variables: { where: { uid: user.uid } } }).then((res) => {
                 console.log(res.data)
-            }).catch(err => {console.log(err)})
+            }).catch(err => { console.log(err) })
         })
         successToast("Succesfully deleted")
         handleExitDeleteUser()
@@ -109,6 +109,8 @@ const DeleteUserComponent = () => {
                 <input type="text" placeholder="Search by full name or email" value={displayName} name="skillSearch" autoComplete="off" onChange={(e) => { handleInputChange(e) }}
                     onFocus={() => { setSearchFocus(true) }} onBlur={() => { setTimeout(() => { setSearchFocus(false) }, 150) }}
                     className="border-none outline-none px-4 py-2 w-80 text-black" />
+                {displayName && <DeleteSVG className="h-7 w-7 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-600"
+                    onClick={() => { setDisplayName(""); setUsersFiltered(allUsersData.data.users) }} />}
             </div>
             {searchFocus &&
                 <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1 z-20">
@@ -117,7 +119,7 @@ const DeleteUserComponent = () => {
             <div className="max-h-72 overflow-auto pt-4">
                 {selectedUsersComponent}
             </div>
-            <button className="w-fit h-fit px-4 py-2 text-sm text-white font-medium border-none rounded-sm bg-red-500 mt-2 float-right" onClick={(e) => {handleDeleteUsers(e)}}>Delete</button>
+            <button className="w-fit h-fit px-4 py-2 text-sm text-white font-medium border-none rounded-sm bg-red-500 mt-2 float-right" onClick={(e) => { handleDeleteUsers(e) }}>Delete</button>
         </>
     )
 }

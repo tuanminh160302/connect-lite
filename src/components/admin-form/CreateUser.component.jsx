@@ -56,7 +56,7 @@ const CreateUserComponent = () => {
                     uid
                 }
         
-                createUserRecord({variables: {input: userObject}}).then((res) => {
+                createUserRecord({variables: {input: [userObject]}}).then((res) => {
                     console.log(res.data)
                     successToast("User created")
                     handleExitCreateUser()

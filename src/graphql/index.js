@@ -146,3 +146,19 @@ mutation CreateJobRoles($input: [JOB_ROLECreateInput!]!) {
   }
 }
 `
+
+export const QueryCategoryValueOnly = gql`
+query Categories {
+  categories {
+    value
+  }
+}
+`
+
+export const QueryJobRoleValueOnly = gql`
+query Categories {
+  jobRoles {
+    value
+  }
+}
+`
