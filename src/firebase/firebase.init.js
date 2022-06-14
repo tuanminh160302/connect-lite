@@ -34,7 +34,7 @@ export const signInWithGoogle = () => {
 
 export const createUserDocument = async (user) => {
     if (!user) return
-    const {uid, displayName, email, photoURL} = user
+    const { uid, displayName, email, photoURL } = user
     const userRef = doc(db, 'users', uid)
     const snap = await getDoc(userRef)
     if (!snap.exists()) {
@@ -48,7 +48,7 @@ export const createUserDocument = async (user) => {
                 username: user.email.split('@')[0]
             }).then(() => {
                 //
-            }) 
+            })
         } catch (err) {
             console.log(err.code, err.name)
         }
@@ -63,11 +63,11 @@ export const fetchUserData = async (uid) => {
     const snap = await getDoc(userRef)
     if (!snap.exists()) {
         return
-    } 
+    }
     return snap.data()
 }
 
-export const fetchUserDataByUsername = async(username) => {
+export const fetchUserDataByUsername = async (username) => {
     if (!username) return
     let res = null
     const userCollectionRef = collection(db, 'users')
@@ -80,6 +80,36 @@ export const fetchUserDataByUsername = async(username) => {
         }
     })
     return res
+}
+
+export const uploadImage = async (user, file) => {
+    if (!user) {
+        return
+    }
+    let returnURL
+    // Set up file collection
+    const fileCollection = 'skill'
+
+    // Get user username
+    const fileName = file.name
+
+    // Set up
+    const pathToFile = `${fileCollection}/${fileName}`
+    const fileRef = ref(storage, pathToFile)
+
+    // Upload the file
+    await uploadBytes(fileRef, file).then(() => {
+        console.log("Uploaded a blob or file!");
+    }).catch(err => console.log(err))
+    // Update the avatar url in the database
+    await getDownloadURL(ref(storage, pathToFile))
+        .then((url) => {
+            returnURL = url
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    return returnURL
 }
 
 export default firebaseApp;
