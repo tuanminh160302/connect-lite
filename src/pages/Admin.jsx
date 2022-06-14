@@ -46,7 +46,7 @@ const Admin = () => {
                     <>
                         {
                             authorized ?
-                                <div className="flex flex-col h-fit w-full px-12 py-28">
+                                <div className="flex flex-col h-fit w-full px-12 py-32">
                                     <div className="w-fit h-fit flex flex-col">
                                         <DefaultModal className='w-fit' content={
                                             <>

@@ -10,9 +10,13 @@ mutation CreateUsers($input: [UserCreateInput!]!) {
 }
 `
 
-// export const DeleteUser = gql`
-
-// `
+export const DeleteUser = gql`
+mutation DeleteUsers($where: UserWhere) {
+  deleteUsers(where: $where) {
+    nodesDeleted
+  }
+}
+`
  
 // export const UpdateUserInfo = gql`
 

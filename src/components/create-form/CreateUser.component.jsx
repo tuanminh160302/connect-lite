@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client/react"
-import { QueryUser } from "../../graphql"
+import { QueryUser, QueryPeople } from "../../graphql"
 import { CreateUser } from "../../graphql/admin/user"
 import { successToast, errorToast } from "../../lib/toast"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
@@ -14,7 +14,11 @@ const CreateUserComponent = () => {
     const [email, setEmail] = useState("")
 
     const [queryUser] = useLazyQuery(QueryUser)
-    const [createUserRecord, newUserRecord] = useMutation(CreateUser)
+    const [createUserRecord, newUserRecord] = useMutation(CreateUser, {
+        refetchQueries: () => [{
+            query: QueryPeople
+        }]
+    })
 
     const handleExitCreateUser = () => {
         setDisplayName("")
@@ -69,7 +73,7 @@ const CreateUserComponent = () => {
 
     return (
         <>
-            <form action="submit" className="flex flex-col w-64" onSubmit={(e) => {handleCreateUser(e)}}>
+            <form action="submit" className="flex flex-col w-80" onSubmit={(e) => {handleCreateUser(e)}}>
                 <label className="text-sm mb-2">Email</label>
                 <input className="w-full mb-4 outline-none border-none px-3 py-2 text-black" required type="email" name="email" value={email}
                     onChange={(e) => {handleInputChange(e)}}/>
