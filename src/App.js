@@ -45,21 +45,23 @@ const App = () => {
         setUser(user)
         console.log(user)
         queryUser({variables: {where: {uid: user.uid}}}).then((res) => {
+          const createdAt = res.data.users.length ? user.metadata.createdAt : new Date().getTime().toString()
+          const userObject = {
+            createdAt,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid,
+            username: user.email.split("@")[0],
+          }
           if (!res.data.users.length) {
-            const userObject = {
-              createdAt: new Date().getTime().toString(),
-              displayName: user.displayName,
-              email: user.email,
-              photoURL: user.photoURL,
-              uid: user.uid,
-              username: user.email.split("@")[0],
-            }
             setUserData(userObject)
             createUserRecord({variables: {input: userObject}}).then((res) => {
               console.log(res)
               dispatch(togglePreloader(false))
             }).catch(err => console.log(err))
           } else {
+            setUserData(userObject)
             dispatch(togglePreloader(false))
             console.log("User record already exists")
           }

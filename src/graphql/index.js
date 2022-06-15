@@ -164,8 +164,24 @@ query Categories {
 }
 `
 
+export const QueryCategory = gql `
+query Categories($where: CATEGORYWhere) {
+  categories(where: $where) {
+    value
+  }
+}
+`
+
+export const QueryJobRole = gql`
+query JobRoles($where: JOB_ROLEWhere) {
+  jobRoles(where: $where) {
+    value
+  }
+}
+`
+
 export const QueryJobRoleValueOnly = gql`
-query Categories {
+query JobRoles {
   jobRoles {
     value
   }

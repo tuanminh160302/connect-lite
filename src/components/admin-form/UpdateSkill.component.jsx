@@ -35,7 +35,6 @@ const UpdateSkillComponent = () => {
             query: QuerySkills
         }]
     })
-
     useEffect(() => {
         allSkillsData.data && setSkillsFiltered(allSkillsData.data.skills)
     }, [allSkillsData.data])
@@ -84,31 +83,30 @@ const UpdateSkillComponent = () => {
             const skillObject = {
                 name,
                 description: des,
-                photoURL,
+                photoURL
+            }
+            const skillConnectObject = {
                 skillIn: {
-                    connect: {
-                        where: {
-                            node: {
-                                value: category
-                            }
+                    where: {
+                        node: {
+                            value: category
                         }
                     }
                 },
                 skillFor: {
-                    connect: {
-                        where: {
-                            node: {
-                                value: jobRole
-                            }
+                    where: {
+                        node: {
+                            value: jobRole
                         }
                     }
                 }
             }
-            updateSkillInfo({ variables: { where: { id: selectedSkills.id }, update: skillObject } }).then((res) => {
-                console.log(res)
-                successToast("Succesfully updated")
-                handleExitUpdateSkill()
-            }).catch(err => console.log(err))
+            if (category)
+                updateSkillInfo({ variables: { where: { id: selectedSkills.id }, update: skillObject, connect: skillConnectObject } }).then((res) => {
+                    console.log(res)
+                    successToast("Succesfully updated")
+                    handleExitUpdateSkill()
+                }).catch(err => console.log(err))
         })
     }
 
@@ -134,7 +132,7 @@ const UpdateSkillComponent = () => {
             setSelectedSkills(skill)
             setName(skill.name)
             setDes(skill.description)
-            setCategory(skill.skillIn ? skill.skillIn.value : "")   
+            setCategory(skill.skillIn ? skill.skillIn.value : "")
             setJobRole(skill.skillFor ? skill.skillFor.value : "")
             successToast("Skill selected")
         }

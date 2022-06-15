@@ -19,30 +19,10 @@ mutation DeleteSkills($where: SkillWhere) {
 `
 
 export const UpdateSkillInfo = gql`
-mutation UpdateSkills($where: SkillWhere, $update: SkillUpdateInput) {
-  updateSkills(where: $where, update: $update) {
-    info {
-      nodesCreated
-    }
-  }
-}
-`
-
-export const UpdateSkillConnect = gql`
-mutation UpdateSkills($connect: SkillConnectInput) {
-  updateSkills(connect: $connect) {
+mutation UpdateSkills($where: SkillWhere, $update: SkillUpdateInput, $connect: SkillConnectInput) {
+  updateSkills(where: $where, update: $update, connect: $connect) {
     info {
       relationshipsCreated
-    }
-  }
-}
-`
-
-export const UpdateSkillDisconnect = gql`
-mutation UpdateSkills($disconnect: SkillDisconnectInput) {
-  updateSkills(disconnect: $disconnect) {
-    info {
-      relationshipsDeleted
     }
   }
 }
