@@ -10,9 +10,21 @@ import gsap from 'gsap';
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from "@apollo/client";
 gsap.ticker.fps(120);
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: "cache-and-network",
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: "cache-and-network",
+    errorPolicy: 'all',
+  },
+}
+
 const client = new ApolloClient({
   uri: 'http://localhost:4000/',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: defaultOptions
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

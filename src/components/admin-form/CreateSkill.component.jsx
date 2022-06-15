@@ -6,8 +6,8 @@ import { successToast, errorToast } from "../../lib/toast"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
 import { toggleFalse } from "../../redux/popUp.slice"
 import { useDropzone } from "react-dropzone"
-import { ReactComponent as DeleteSVG } from '../../assets/x.svg'
 import { uploadImage } from "../../firebase/firebase.init"
+import { ReactComponent as DeleteSVG } from '../../assets/x.svg'
 import { UserContext } from "../../lib/context"
 
 const CreateSkillComponent = () => {
@@ -72,10 +72,10 @@ const CreateSkillComponent = () => {
         dispatch(toggleFalse())
     }
 
-    const handleCreateUser = (e) => {
+    const handleCreateSkill = (e) => {
         e.preventDefault()
-        querySkill({ variables: { where: {name} } }).then((res) => {
-            console.log(res.data.skills)
+        querySkill({ variables: { where: {OR: [{id: ID}, {name}]}} }).then((res) => {
+            console.log(res)
             if (res.data.skills.length != 0) {
                 errorToast("Skill already registered")
             } else {
@@ -90,6 +90,15 @@ const CreateSkillComponent = () => {
                                 where: {
                                     node: {
                                         value: category
+                                    }
+                                }
+                            }
+                        },
+                        skillFor: {
+                            connect: {
+                                where: {
+                                    node: {
+                                        value: jobRole
                                     }
                                 }
                             }
@@ -147,7 +156,7 @@ const CreateSkillComponent = () => {
 
     return (
         <>
-            <form action="submit" className="flex flex-col w-80 text-xs" onSubmit={(e) => { handleCreateUser(e) }}>
+            <form action="submit" className="flex flex-col w-80 text-xs" onSubmit={(e) => { handleCreateSkill(e) }}>
                 <label className="mb-2">Name</label>
                 <input className="w-full mb-4 outline-none border-none px-3 py-2 text-black" required type="text" name="name" value={name}
                     onChange={(e) => { handleInputChange(e) }} />

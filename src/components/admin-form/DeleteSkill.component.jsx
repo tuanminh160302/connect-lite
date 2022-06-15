@@ -22,6 +22,8 @@ const DeleteSkillComponent = () => {
         }]
     })
 
+    console.log(allSkillsData.data)
+
     useEffect(() => {
         allSkillsData.data && setSkillsFiltered(allSkillsData.data.skills)
     }, [allSkillsData.data])
@@ -103,7 +105,7 @@ const DeleteSkillComponent = () => {
     return (
         <>
             <div className="relative">
-                <input type="text" placeholder="Search by full name or email" value={name} name="skillSearch" autoComplete="off" onChange={(e) => { handleInputChange(e) }}
+                <input type="text" placeholder="Search by skill name" value={name} name="skillSearch" autoComplete="off" onChange={(e) => { handleInputChange(e) }}
                     onFocus={() => { setSearchFocus(true) }} onBlur={() => { setTimeout(() => { setSearchFocus(false) }, 150) }}
                     className="border-none outline-none px-4 py-2 w-80 text-black" />
                 {name && <DeleteSVG className="h-7 w-7 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-600"

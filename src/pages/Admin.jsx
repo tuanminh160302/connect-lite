@@ -56,8 +56,8 @@ const Admin = () => {
                                                         onClick={() => {dispatch(toggleAdmin(true)); setTarget('user'); setAction('Create')}}>Create User</button>
                                                     <button className={`${buttonClass} bg-red-500`}
                                                         onClick={() => {dispatch(toggleAdmin(true)); setTarget('user'); setAction('Delete')}}>Delete User</button>
-                                                    <button className={`${buttonClass} bg-amber-500`}
-                                                        onClick={() => {dispatch(toggleAdmin(true)); setTarget('user'); setAction('Update')}}>Update User</button>
+                                                    {/* <button className={`${buttonClass} bg-amber-500`}
+                                                        onClick={() => {dispatch(toggleAdmin(true)); setTarget('user'); setAction('Update')}}>Update User</button> */}
                                                 </div>
                                             </>
                                         } />

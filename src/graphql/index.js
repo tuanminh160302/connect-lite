@@ -22,8 +22,14 @@ export const QuerySkills = gql`
             photoURL
             description
             id
+            skillIn {
+              value
+            }
+            skillFor {
+              value
+            }
+        }
     }
-}
 `
 
 export const QuerySkill = gql`

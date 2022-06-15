@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client/react"
-import { QueryUser } from "../../graphql"
+import { useQuery, useMutation } from "@apollo/client/react"
 import { DeleteUser } from "../../graphql/admin/user"
 import { successToast, errorToast } from "../../lib/toast"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"

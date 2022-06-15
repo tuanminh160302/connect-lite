@@ -80,6 +80,7 @@ const AddSkills = ({ target, profileData }) => {
         if (showEditSkill) {
             querySkill().then((res) => {
                 setSkillToEditData(res.data)
+                setSelectedSkillId(res.data.skills[0].id)
                 setSelectedSkill(res.data.skills[0].name)
             })
             queryUserToSkill().then((res) => {
@@ -91,10 +92,8 @@ const AddSkills = ({ target, profileData }) => {
     }, [showEditSkill])
 
     const handleCreateUserToSkill = () => {
-        console.log(skillToEdit)
-        console.log(selectedSkill)
-        console.log(skillsData.data.skills)
-        querySkill({ variables: { where: { id: selectedSkillId } } }).then((res) => {
+        console.log(selectedSkillId)
+        querySkill({ variables: { where: {OR: [{id: selectedSkillId}, {name: selectedSkill}]}} }).then((res) => {
             console.log(res)
             if (res.data.skills.length) {
                 createUserToSkill({

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
@@ -14,25 +13,26 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { UserContext } from './lib/context';
 import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { createUserDocument } from './firebase/firebase.init';
 import { useSelector, useDispatch } from 'react-redux';
 import { togglePreloader } from './redux/preloaderSlice';
 import slideEase from './lib/customEase';
 import Profile from './pages/Profile';
-import { fetchUserData } from './firebase/firebase.init'
 import MenuPanel from './components/MenuPanel.component';
 import { useLocation } from 'react-router';
-import { useMutation } from '@apollo/client';
-import { CreateUsers } from './graphql';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { CreateUsers, QueryPeople, QueryUser } from './graphql';
 
 const App = () => {
 
   const auth = getAuth()
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState(null)
-  const [createUserRecord, {data, loading, error}] = useMutation(CreateUsers)
-
-  if (loading) console.log('Creating/Updating/Merging user record')
+  const [queryUser] = useLazyQuery(QueryUser)
+  const [createUserRecord, {data, loading, error}] = useMutation(CreateUsers, {
+    refetchQueries: () => [{
+      query: QueryPeople
+    }]
+  })
  
   const showPreloader = useSelector((state) => state.preloader.show)
   const dispatch = useDispatch()
@@ -42,19 +42,31 @@ const App = () => {
     dispatch(togglePreloader(true))
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        createUserDocument(user).then(() => {
-          setUser(user)
-          fetchUserData(user.uid).then((res) => {
-            console.log(res)
-            setUserData(res)
-            createUserRecord({variables: {input: res}}).then(() => {
+        setUser(user)
+        console.log(user)
+        queryUser({variables: {where: {uid: user.uid}}}).then((res) => {
+          if (!res.data.users.length) {
+            const userObject = {
+              createdAt: new Date().getTime().toString(),
+              displayName: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL,
+              uid: user.uid,
+              username: user.email.split("@")[0],
+            }
+            setUserData(userObject)
+            createUserRecord({variables: {input: userObject}}).then((res) => {
               console.log(res)
               dispatch(togglePreloader(false))
-            }).catch(err => {})
-          })
+            }).catch(err => console.log(err))
+          } else {
+            dispatch(togglePreloader(false))
+            console.log("User record already exists")
+          }
         })
       } else {
         setUser(null)
+        setUserData(null)
         dispatch(togglePreloader(false))
       }
     })

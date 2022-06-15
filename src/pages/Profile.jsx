@@ -61,7 +61,7 @@ const Profile = () => {
                                 } />
                             </div>
                             <div>
-                                <div className="flex flex-col h-fit w-fit">
+                                <div className="flex flex-col h-fit w-full">
                                     <div className="flex flex-row h-fit w-fit items-center mb-6">
                                         <p className="text-black text-base font-semibold">Skills and Certifications</p>
                                         <EditSVG className="h-6 w-auto fill-black ml-3 cursor-pointer" onClick={() => { handleAddSkill() }} />

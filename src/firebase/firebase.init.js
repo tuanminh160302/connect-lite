@@ -86,6 +86,11 @@ export const uploadImage = async (user, file) => {
     if (!user) {
         return
     }
+
+    if (!file) {
+        return 
+    }
+    
     let returnURL
     // Set up file collection
     const fileCollection = 'skill'

@@ -3,6 +3,7 @@ import ReactPaginate from "react-paginate"
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux/es/exports";
 import { toggleEditSkill } from "../redux/popUp.slice";
+import { usePrevious } from "../lib/customHooks";
 
 const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating }) => {
     // We start with an empty list of items.
@@ -14,18 +15,19 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
     const [itemOffset, setItemOffset] = useState(0);
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const prevItemsLength = usePrevious(items.length)
+    let initRun = true
     useEffect(() => {
         // Fetch items from another resources.
         const endOffset = itemOffset + itemsPerPage;
-        // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentItems(items.slice(itemOffset, endOffset));
         skillsRating && setCurrentRatings(skillsRating.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(items.length / itemsPerPage));
     }, [itemOffset, itemsPerPage, items]);
 
     useEffect(() => {
-        setItemOffset(0)
+        prevItemsLength != items.length && setItemOffset(0)
     }, [items])
 
     // Invoke when user click to request another page.
@@ -106,6 +108,8 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
         );
     }
 
+    prevItemsLength != items.length && console.log(prevItemsLength, items.length)
+
     return (
         <div className={paginationStyle}>
             <Items currentItems={currentItems} target={target} />
@@ -124,6 +128,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
                 previousClassName="flex justify-center items-center px-5"
                 nextClassName="flex justify-center items-center px-5"
                 breakClassName="flex justify-center items-center"
+                forcePage={itemOffset / itemsPerPage}
             />
         </div>
     );
