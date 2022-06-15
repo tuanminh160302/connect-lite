@@ -84,7 +84,7 @@ const DeleteUserComponent = () => {
                 const index = temp.indexOf(user)
                 temp.splice(index, 1)
                 setSelectedUsers([...temp])
-                successToast("User removed from delete list")
+                successToast("Removed")
             } catch (err) {
                 console.log(err)
                 errorToast("An error has occured")

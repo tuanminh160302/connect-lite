@@ -2,6 +2,7 @@ import PopUpModal from "./PopupModal.component"
 import CreateUser from "./admin-form/CreateUser.component"
 import DeleteUser from "./admin-form/DeleteUser.component"
 import CreateSkill from "./admin-form/CreateSkill.component"
+import DeleteSkill from "./admin-form/DeleteSkill.component"
 
 const AdminPanel = ({target, action}) => {
     return (
@@ -12,6 +13,7 @@ const AdminPanel = ({target, action}) => {
                     {target=="user" && action=="Create" && <CreateUser />}
                     {target=="user" && action=="Delete" && <DeleteUser />}
                     {target=="skill" && action=="Create" && <CreateSkill />}
+                    {target=="skill" && action=="Delete" && <DeleteSkill />}
                 </>
             }/>
         </>

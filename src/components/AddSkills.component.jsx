@@ -22,6 +22,7 @@ const AddSkills = ({ target, profileData }) => {
     const [searchFocus, setSearchFocus] = useState(false)
     const [skillsFiltered, setSkillsFiltered] = useState(null)
     const [selectedSkill, setSelectedSkill] = useState("")
+    const [selectedSkillId, setSelectedSkillId] = useState("")
     const [skillLevel, setSkillLevel] = useState(0)
     const [skillToEditData, setSkillToEditData] = useState(null)
 
@@ -57,6 +58,7 @@ const AddSkills = ({ target, profileData }) => {
 
     const handleExitAddSkill = () => {
         setSelectedSkill("")
+        setSelectedSkillId("")
         skillsData.data && setSkillsFiltered(skillsData.data.skills)
         setSkillLevel(0)
     }
@@ -65,6 +67,7 @@ const AddSkills = ({ target, profileData }) => {
         setSkillToEditData(null)
         setSkillLevel(0)
         setSelectedSkill("")
+        setSelectedSkillId("")
     }
 
     const handleInputChange = (e) => {
@@ -88,12 +91,15 @@ const AddSkills = ({ target, profileData }) => {
     }, [showEditSkill])
 
     const handleCreateUserToSkill = () => {
-        querySkill({ variables: { where: { name: selectedSkill } } }).then((res) => {
+        console.log(skillToEdit)
+        console.log(selectedSkill)
+        console.log(skillsData.data.skills)
+        querySkill({ variables: { where: { id: selectedSkillId } } }).then((res) => {
+            console.log(res)
             if (res.data.skills.length) {
                 createUserToSkill({
                     variables: { where: { uid: profileData.uid }, connect: { hasSkill: [{ where: { node: { name: selectedSkill } }, edge: { level: parseInt(skillLevel) } }] } },
-                })
-                    .then(() => {
+                }).then(() => {
                         successToast("Skillset updated")
                         dispatch(toggleAddSkill(false))
                     }).catch(err => console.log(err.name))
@@ -117,8 +123,8 @@ const AddSkills = ({ target, profileData }) => {
     }
 
     const allSkills = skillsFiltered ? skillsFiltered.map((skill) => {
-
         const handleSelectSkill = () => {
+            setSelectedSkillId(skill.id)
             setSelectedSkill(skill.name)
             setSkillsFiltered(skillsData.data.skills.filter((s) => { return s.name == skill.name }))
         }
@@ -141,7 +147,7 @@ const AddSkills = ({ target, profileData }) => {
                                     onFocus={() => { setSearchFocus(true) }} onBlur={() => { setTimeout(() => { setSearchFocus(false) }, 150) }}
                                     className="border-b-2 border-black outline-none px-4 py-2 w-80" />
                                 {selectedSkill && <DeleteSVG className="h-7 w-7 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-600"
-                                    onClick={() => { setSelectedSkill(""); setSkillsFiltered(skillsData.data.skills) }} />}
+                                    onClick={() => { setSelectedSkill(""); setSkillsFiltered(skillsData.data.skills); setSelectedSkillId("") }} />}
                             </div>
                             {searchFocus &&
                                 <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1">

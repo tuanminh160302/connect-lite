@@ -83,6 +83,9 @@ mutation UpdateUsers($where: UserWhere, $connect: UserConnectInput) {
   updateUsers(where: $where, connect: $connect) {
     users {
       username
+      hasSkill {
+        name
+      }
     }
   }
 }
