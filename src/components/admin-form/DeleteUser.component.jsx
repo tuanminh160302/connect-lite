@@ -37,10 +37,10 @@ const DeleteUserComponent = () => {
         selectedUsers.map((user) => {
             deleteUser({ variables: { where: { uid: user.uid } } }).then((res) => {
                 console.log(res.data)
+                successToast("Succesfully deleted")
+                handleExitDeleteUser()
             }).catch(err => { console.log(err) })
         })
-        successToast("Succesfully deleted")
-        handleExitDeleteUser()
     }
 
     const handleInputChange = (e) => {

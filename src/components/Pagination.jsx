@@ -85,7 +85,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
                                         {target.includes('skills') ? item.name : target == "people" ? item.displayName : item.projectName}
                                     </p>
                                 </div>
-                                <div className="p-5 w-[35%] border-r-2 border-gray-300 h-full flex items-center">
+                                <div className="p-5 w-[25%] max-w-sm border-r-2 border-gray-300 h-full flex items-center">
                                     <p className="text-xs overflow-ellipsis whitespace-nowrap overflow-hidden">{target.includes('skills') ? item.description : target == "people" ? item.bio : item.description}</p>
                                 </div>
                                 {

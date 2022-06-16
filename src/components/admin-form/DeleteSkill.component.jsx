@@ -39,10 +39,10 @@ const DeleteSkillComponent = () => {
         selectedSkills.map((skill) => {
             deleteSkill({ variables: { where: { id: skill.id } } }).then((res) => {
                 console.log(res.data)
+                successToast("Succesfully deleted")
+                handleExitDeleteSkill()
             }).catch(err => { console.log(err) })
         })
-        successToast("Succesfully deleted")
-        handleExitDeleteSkill()
     }
 
     const handleInputChange = (e) => {

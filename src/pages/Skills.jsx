@@ -41,7 +41,7 @@ const Skills = () => {
     }
 
     return (
-        <>
+        <> 
             {
                 user ?
                     <div className="w-full h-fit px-12 pb-28">

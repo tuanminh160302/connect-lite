@@ -129,7 +129,12 @@ const AddSkills = ({ target, profileData }) => {
         }
 
         return (
-            <div key={skill.id} className="cursor-pointer hover:bg-gray-200 transition duration-300 px-4 py-2" onClick={() => { handleSelectSkill() }}>{skill.name}</div>
+            <div key={skill.id} className="flex flex-row px-4 py-2 cursor-pointer items-center" onClick={() => { handleSelectSkill() }}>
+                <img className="w-8 h-8 rounded-full mr-3" src={skill.photoURL} alt="" />
+                <div className="flex flex-col text-black text-xs">
+                    <p>{skill.name}</p>
+                </div>
+            </div>
         )
     }) : null
 
@@ -153,14 +158,14 @@ const AddSkills = ({ target, profileData }) => {
                                     {allSkills}
                                 </div>}
                             <div className="w-full h-fit flex flex-row justify-between text-xs font-medium mt-4">
-                                <p id='1' className={`p-2 border-2 border-white cursor-pointer flex-grow
+                                <p id='1' className={`p-2 border-2 border-white cursor-pointer flex-grow flex justify-center
                         ${skillLevel != '1' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
                                     onClick={(e) => { handleSelectLevel(e) }}>Knowledgable</p>
-                                <p id='2' className={`p-2 border-2 border-white cursor-pointer flex-grow
-                        ${skillLevel != '2' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
+                                <p id='2' className={`p-2 border-2 border-white cursor-pointer flex-grow flex justify-center
+                        ${skillLevel != '2' ? 'text-white hover:text-white transition duration-300 ease-in-out hover:bg-sky-600' : 'text-white bg-sky-600'}`}
                                     onClick={(e) => { handleSelectLevel(e) }}>Proficient</p>
-                                <p id='3' className={`p-2 border-2 border-white cursor-pointer flex-grow
-                        ${skillLevel != '3' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
+                                <p id='3' className={`p-2 border-2 border-white cursor-pointer flex-grow flex justify-center
+                        ${skillLevel != '3' ? 'text-white hover:text-white transition duration-300 ease-in-out hover:bg-red-600' : 'text-white bg-red-600'}`}
                                     onClick={(e) => { handleSelectLevel(e) }}>Lead/Teach</p>
                             </div>
                             <button

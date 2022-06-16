@@ -10,9 +10,14 @@ mutation CreateCategories($input: [CATEGORYCreateInput!]!) {
 }
 `
 
-// export const DeleteCategory = gql`
-
-// `
+export const DeleteCategory = gql`
+mutation DeleteCategories($where: CATEGORYWhere) {
+  deleteCategories(where: $where) {
+    nodesDeleted
+    relationshipsDeleted
+  }
+}
+`
  
 // export const UpdateCategoryInfo = gql`
 

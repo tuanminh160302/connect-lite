@@ -5,6 +5,7 @@ import CreateSkill from "./admin-form/CreateSkill.component"
 import DeleteSkill from "./admin-form/DeleteSkill.component"
 import UpdateSkill from "./admin-form/UpdateSkill.component"
 import CreateCategory from "./admin-form/CreateCategory.component"
+import DeleteCategory from "./admin-form/DeleteCategory.component"
 
 const AdminPanel = ({target, action}) => {
     return (
@@ -18,6 +19,7 @@ const AdminPanel = ({target, action}) => {
                     {target=="skill" && action=="Delete" && <DeleteSkill />}
                     {target=="skill" && action=="Update" && <UpdateSkill />}
                     {target=="category" && action=="Create" && <CreateCategory />}
+                    {target=="category" && action=="Delete" && <DeleteCategory />}
                 </>
             }/>
         </>

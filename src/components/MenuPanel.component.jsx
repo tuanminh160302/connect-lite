@@ -17,7 +17,6 @@ const MenuPanel = () => {
     const textStyle = "text-xs font-medium text-white ml-2"
     const sections = ["Dashboard", "People", "Projects", "Skills", "Admin"]
     const sectionsSVG = [DashboardSVG, PeopleSVG, ProjectsSVG, SkillsSVG, AdminSVG]
-    console.log(sectionsSVG)
 
     return (
         <div className="w-fit bg-bg_navy h-screen sticky top-0 shadow-rightShadow z-[45] flex flex-col">
@@ -29,16 +28,15 @@ const MenuPanel = () => {
                 sections.map((section, index) => {
                     const url = '/'+section.toLowerCase()
                     return (
-                        <>
+                        <div key={index}>
                             <OptionInModal
-                                key={index}
                                 divStyle={divStyle}
                                 SVG={sectionsSVG[index]}
                                 description={section}
                                 SVGStyle={SVGStyle}
                                 textStyle={textStyle}
                                 onClick={() => { navigate(url) }} />
-                        </>
+                        </div>
                     )
                 })
             }
