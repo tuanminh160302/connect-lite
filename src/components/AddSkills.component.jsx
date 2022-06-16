@@ -149,7 +149,7 @@ const AddSkills = ({ target, profileData }) => {
                                     onClick={() => { setSelectedSkill(""); setSkillsFiltered(skillsData.data.skills); setSelectedSkillId("") }} />}
                             </div>
                             {searchFocus &&
-                                <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1">
+                                <div className="w-80 max-h-72 overflow-auto bg-white absolute text-xs">
                                     {allSkills}
                                 </div>}
                             <div className="w-full h-fit flex flex-row justify-between text-xs font-medium mt-4">

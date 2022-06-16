@@ -66,7 +66,7 @@ const DeleteUserComponent = () => {
 
         return (
             <div key={user.uid} className='flex flex-row px-4 py-2 cursor-pointer items-center' onClick={(e) => { handleSelectUser(e) }}>
-                <img className="w-10 h-10 rounded-full mr-3" src={user.photoURL} alt="" />
+                <img className="w-8 h-8 rounded-full mr-3" src={user.photoURL} alt="" />
                 <div className="flex flex-col text-black text-xs">
                     <p>{user.displayName}</p>
                     <p>{user.email}</p>
@@ -112,7 +112,7 @@ const DeleteUserComponent = () => {
                     onClick={() => { setDisplayName(""); setUsersFiltered(allUsersData.data.users) }} />}
             </div>
             {searchFocus &&
-                <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1 z-20">
+                <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1 z-20 text-xs">
                     {allUsers}
                 </div>}
             <div className="max-h-72 overflow-auto pt-4">

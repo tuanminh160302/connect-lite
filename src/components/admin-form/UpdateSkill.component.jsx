@@ -178,7 +178,7 @@ const UpdateSkillComponent = () => {
 
         return (
             <div key={skill.id} className='flex flex-row px-4 py-2 cursor-pointer items-center' onClick={(e) => { handleSelectSkill(e) }}>
-                <img className="w-10 h-10 rounded-full mr-3" src={skill.photoURL} alt="" />
+                <img className="w-8 h-8 rounded-full mr-3" src={skill.photoURL} alt="" />
                 <div className="flex flex-col text-black text-xs">
                     <p>{skill.name}</p>
                 </div>
@@ -256,14 +256,14 @@ const UpdateSkillComponent = () => {
                             {/* <div className="flex flex-col text-white">
                                 <p>{selectedSkills.name}</p>
                             </div> */}
-                            <input value={name} className="text-black outline-none border-none px-4 py-2 grow" type="text" name="name" onChange={(e) => { handleInputChange(e) }} />
+                            <input value={name} className="text-black outline-none border-none px-4 py-2 grow" type="text" name="name" autoComplete="off" onChange={(e) => { handleInputChange(e) }} />
                             <DeleteSVG className="h-4 w-4 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-500" onClick={() => { handleRemoveSelectedSkill() }} />
                         </div>
                         <label>Description</label>
-                        <input type="text" name="des" value={des} className="w-full outline-none border-none px-4 py-2 mt-1 mb-3 text-black" onChange={(e) => { handleInputChange(e) }} />
+                        <input type="text" name="des" value={des} className="w-full outline-none border-none px-4 py-2 mt-1 mb-3 text-black" autoComplete="off" onChange={(e) => { handleInputChange(e) }} />
                         <label>Category</label>
                         <div className="relative mb-3">
-                            <input className="w-full outline-none border-none px-4 py-2 mt-1 text-black" required type="text" name="category" value={category}
+                            <input className="w-full outline-none border-none px-4 py-2 mt-1 text-black" required type="text" name="category" autoComplete="off" value={category}
                                 onChange={(e) => { handleInputChange(e) }} onFocus={() => { setSearchCatFocus(true) }} onBlur={() => { setTimeout(() => { setSearchCatFocus(false) }, 150) }} />
                             {category && <DeleteSVG className="h-4 w-4 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-500"
                                 onClick={() => { setCategory(""); setCategoryFiltered(allCategoriesData.data.categories) }} />}
@@ -274,7 +274,7 @@ const UpdateSkillComponent = () => {
                         </div>
                         <label>Job Role</label>
                         <div className="relative">
-                            <input className="w-full outline-none border-none px-4 py-2 mt-1 text-black" required type="text" name="job-role" value={jobRole}
+                            <input className="w-full outline-none border-none px-4 py-2 mt-1 text-black" required type="text" name="job-role" autoComplete="off" value={jobRole}
                                 onChange={(e) => { handleInputChange(e) }} onFocus={() => { setSearchJobFocus(true) }} onBlur={() => { setTimeout(() => { setSearchJobFocus(false) }, 150) }} />
                             {jobRole && <DeleteSVG className="h-4 w-4 absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer fill-gray-500"
                                 onClick={() => { setJobRole(""); setJobRoleFiltered(allJobRolesData.data.jobRoles) }} />}

@@ -49,7 +49,7 @@ const Skills = () => {
                             items ?
                                 <>
                                     <div className="z-10 sticky top-0 pt-24 bg-bg_light text-xs">
-                                        <input className="py-1 px-2 mb-2 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
+                                        <input autoComplete="off" className="py-1 px-2 mb-2 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
                                         <PaginationHeader target="skills" />
                                     </div>
                                     <Pagination

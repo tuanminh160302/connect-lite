@@ -68,7 +68,7 @@ const DeleteSkillComponent = () => {
 
         return (
             <div key={skill.id} className='flex flex-row px-4 py-2 cursor-pointer items-center' onClick={(e) => { handleSelectSkill(e) }}>
-                <img className="w-10 h-10 rounded-full mr-3" src={skill.photoURL} alt="" />
+                <img className="w-8 h-8 rounded-full mr-3" src={skill.photoURL} alt="" />
                 <div className="flex flex-col text-black text-xs">
                     <p>{skill.name}</p>
                 </div>
@@ -112,7 +112,7 @@ const DeleteSkillComponent = () => {
                     onClick={() => { setName(""); setSkillsFiltered(allSkillsData.data.skills) }} />}
             </div>
             {searchFocus &&
-                <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1 z-20">
+                <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1 z-20 text-xs">
                     {allSkills}
                 </div>}
             <div className="max-h-72 overflow-auto pt-4">
