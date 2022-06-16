@@ -103,7 +103,7 @@ const DeleteUserComponent = () => {
     })
 
     return (
-        <>
+        <div className="text-xs">
             <div className="relative">
                 <input type="text" placeholder="Search by full name or email" value={displayName} name="skillSearch" autoComplete="off" onChange={(e) => { handleInputChange(e) }}
                     onFocus={() => { setSearchFocus(true) }} onBlur={() => { setTimeout(() => { setSearchFocus(false) }, 150) }}
@@ -118,8 +118,8 @@ const DeleteUserComponent = () => {
             <div className="max-h-72 overflow-auto pt-4">
                 {selectedUsersComponent}
             </div>
-            <button className="w-fit h-fit px-4 py-2 text-sm text-white font-medium border-none rounded-sm bg-red-500 mt-2 float-right" onClick={(e) => { handleDeleteUsers(e) }}>Delete</button>
-        </>
+            <button className="w-fit h-fit px-4 py-2 text-xs text-white font-medium border-none rounded-sm bg-red-500 mt-2 float-right" onClick={(e) => { handleDeleteUsers(e) }}>Delete</button>
+        </div>
     )
 }
 

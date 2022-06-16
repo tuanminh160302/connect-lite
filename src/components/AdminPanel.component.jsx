@@ -9,9 +9,9 @@ import CreateCategory from "./admin-form/CreateCategory.component"
 const AdminPanel = ({target, action}) => {
     return (
         <>
-            <PopUpModal className="text-white text-sm" content={
+            <PopUpModal className="text-white text-xs" content={
                 <>
-                    <p className="text-sm font-medium mb-2">{action} {target}</p>
+                    <p className="text-xs font-medium mb-4">{action} {target}</p>
                     {target=="user" && action=="Create" && <CreateUser />}
                     {target=="user" && action=="Delete" && <DeleteUser />}
                     {target=="skill" && action=="Create" && <CreateSkill />}

@@ -42,27 +42,27 @@ const Header = () => {
     }, [location.pathname])
 
     return (
-        <div className="w-full h-fit py-3 px-8 md:py-6 md:px-10 flex flex-row-reverse justify-between items-center fixed top-0 left-0 z-40 bg-bg_navy">
+        <div className="w-full h-fit py-3 px-8 md:py-3 md:px-10 flex flex-row-reverse justify-between items-center fixed top-0 left-0 z-40 bg-bg_navy">
             {
                 !user ?
-                    <a href="/login"><button className="bg-bg_navy px-4 py-2 rounded header-actions">Login</button></a> :
-                    <div className="rounded-full box-border h-12 w-12 relative">
+                    <a href="/login"><button className="bg-bg_navy px-4 py-2 header-actions">Login</button></a> :
+                    <div className="rounded-full box-border h-8 w-8 relative">
                         <img className="rounded-full h-full w-full cursor-pointer" src={user.photoURL} alt="avatar" onClick={() => { handleToggleModal() }} />
                         {/* {showProfileModal && <div ref={profileModal} className="mt-3 h-80 w-64 bg-bg_navy shadow-xl shadow-cyan-900/40 absolute right-0 rounded-xl"></div>} */}
-                        <div ref={profileModal} className="mt-3 h-fit w-fit bg-bg_navy shadow-sm shadow-cyan-900/30 absolute right-0 rounded-xl origin-top scale-y-0">
+                        <div ref={profileModal} className="mt-3 h-fit w-fit bg-bg_navy shadow-sm shadow-cyan-900/30 absolute right-0 origin-top scale-y-0">
                             <OptionInModal
-                                divStyle="w-full h-fit rounded-xl pt-3 py-2 pl-8 pr-16 md:pt-5 md:py-4 md:pl-10 md:pr-20 flex flex-row items-center cursor-pointer hover:bg-black transition ease-in-out duration-300"
+                                divStyle="w-full h-fit pt-3 py-2 pl-6 pr-12 md:pt-4 md:py-4 md:pl-8 md:pr-12 flex flex-row items-center cursor-pointer hover:bg-black transition ease-in-out duration-300"
                                 SVG={ProfileSVG}
                                 description="Profile"
-                                SVGStyle="h-6 w-6 cursor-pointer fill-white"
-                                textStyle="text-sm font-medium text-white ml-4" 
+                                SVGStyle="h-5 w-5 cursor-pointer fill-white"
+                                textStyle="text-xs font-medium text-white ml-3" 
                                 onClick={handleNavigateUser}/>
                             <OptionInModal
-                                divStyle="w-full h-fit rounded-xl pb-3 py-2 pl-8 pr-16 md:pb-5 md:py-4 md:pl-10 md:pr-20 flex flex-row items-center cursor-pointer hover:bg-black transition ease-in-out duration-300"
+                                divStyle="w-full h-fit pb-3 py-2 pl-6 pr-12 md:pb-4 md:py-4 md:pl-8 md:pr-12 flex flex-row items-center cursor-pointer hover:bg-black transition ease-in-out duration-300"
                                 SVG={PowerSVG}
                                 description="Logout"
-                                SVGStyle="h-6 w-6 cursor-pointer fill-white"
-                                textStyle="text-sm font-medium text-white ml-4" 
+                                SVGStyle="h-5 w-5 cursor-pointer fill-white"
+                                textStyle="text-xs font-medium text-white ml-3" 
                                 onClick={handleSignout}/>
                         </div>
                     </div>

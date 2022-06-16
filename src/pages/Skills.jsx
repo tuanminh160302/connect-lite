@@ -48,8 +48,8 @@ const Skills = () => {
                         {
                             items ?
                                 <>
-                                    <div className="z-10 sticky top-0 pt-28 bg-bg_light">
-                                        <input className="py-2 px-3 mb-5 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
+                                    <div className="z-10 sticky top-0 pt-24 bg-bg_light text-xs">
+                                        <input className="py-1 px-2 mb-2 border-2 border-bg_navy" name='search' type="text" value={searchValue} placeholder="Search skills..." onChange={(e) => { handleInputChange(e) }} />
                                         <PaginationHeader target="skills" />
                                     </div>
                                     <Pagination
@@ -63,7 +63,7 @@ const Skills = () => {
                         }
                     </div> :
                     <div className="w-screen h-screen px-12 pb-28 flex flex-row items-center justify-center">
-                        <a className="bg-bg_navy px-6 py-4 cursor-pointer text-sm font-medium text-white rounded-lg" href="/login">Login to view this content</a>
+                        <a className="bg-bg_navy px-6 py-4 cursor-pointer text-xs font-medium text-white rounded-lg" href="/login">Login to view this content</a>
                     </div>
             }
         </>

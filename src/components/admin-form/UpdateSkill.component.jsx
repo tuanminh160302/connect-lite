@@ -2,12 +2,12 @@ import { useEffect, useState, useContext, useCallback } from "react"
 import { UserContext } from "../../lib/context"
 import { useDropzone } from "react-dropzone"
 import { uploadImage } from "../../firebase/firebase.init"
-import { useQuery, useMutation } from "@apollo/client/react"
-import { UpdateSkillInfo } from "../../graphql/admin/skill"
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client/react"
+import { UpdateSkillInfo, UpdateSkillConnect, UpdateSkillDisconnect } from "../../graphql/admin/skill"
 import { successToast, errorToast } from "../../lib/toast"
 import { useDispatch } from "react-redux/es/hooks/useDispatch"
 import { toggleFalse } from "../../redux/popUp.slice"
-import { QuerySkills, QueryCategoryValueOnly, QueryJobRoleValueOnly } from "../../graphql"
+import { QuerySkill, QuerySkills, QueryCategoryValueOnly, QueryJobRoleValueOnly } from "../../graphql"
 import { ReactComponent as DeleteSVG } from '../../assets/x.svg'
 
 const UpdateSkillComponent = () => {
@@ -27,6 +27,7 @@ const UpdateSkillComponent = () => {
     const [searchCatFocus, setSearchCatFocus] = useState(false)
     const [searchJobFocus, setSearchJobFocus] = useState(false)
 
+    const [querySkill] = useLazyQuery(QuerySkill)
     const allSkillsData = useQuery(QuerySkills)
     const allCategoriesData = useQuery(QueryCategoryValueOnly)
     const allJobRolesData = useQuery(QueryJobRoleValueOnly)
@@ -34,6 +35,12 @@ const UpdateSkillComponent = () => {
         refetchQueries: () => [{
             query: QuerySkills
         }]
+    })
+    const [updateSkillConnect, updateSkillConnectData] = useMutation(UpdateSkillConnect, {
+        refetchQueries: () => [{ query: QueryCategoryValueOnly }, { query: QueryJobRoleValueOnly }]
+    })
+    const [updateSkillDisconnect, updateSkillDisconnectData] = useMutation(UpdateSkillDisconnect, {
+        refetchQueries: () => [{ query: QueryCategoryValueOnly }, { query: QueryJobRoleValueOnly }]
     })
     useEffect(() => {
         allSkillsData.data && setSkillsFiltered(allSkillsData.data.skills)
@@ -76,14 +83,29 @@ const UpdateSkillComponent = () => {
         dispatch(toggleFalse())
     }
 
-    const handleUpdateSkills = (e) => {
-        e.preventDefault()
+    const updateHelper = () => {
         uploadImage(user, iconFile).then((res) => {
             const photoURL = res ? res : selectedSkills.photoURL
             const skillObject = {
                 name,
                 description: des,
-                photoURL
+                photoURL,
+            }
+            const skillDisconnectObject = {
+                skillIn: {
+                    where: {
+                        node: {
+                            value: selectedSkills.skillIn ? selectedSkills.skillIn.value : null
+                        }
+                    }
+                },
+                skillFor: {
+                    where: {
+                        node: {
+                            value: selectedSkills.skillFor ? selectedSkills.skillFor.value : null
+                        }
+                    }
+                }
             }
             const skillConnectObject = {
                 skillIn: {
@@ -101,12 +123,29 @@ const UpdateSkillComponent = () => {
                     }
                 }
             }
-            if (category)
-                updateSkillInfo({ variables: { where: { id: selectedSkills.id }, update: skillObject, connect: skillConnectObject } }).then((res) => {
-                    console.log(res)
-                    successToast("Succesfully updated")
-                    handleExitUpdateSkill()
+            updateSkillInfo({ variables: { where: { id: selectedSkills.id }, update: skillObject, disconnect: skillDisconnectObject } })
+                .then((res) => {
+                    updateSkillConnect({variables: {where: {id: selectedSkills.id}, connect: skillConnectObject}}).then((res) => {
+                        console.log(res)
+                        successToast("Succesfully updated")
+                        handleExitUpdateSkill()
+                    })
                 }).catch(err => console.log(err))
+        })
+    }
+
+    const handleUpdateSkills = (e) => {
+        e.preventDefault()
+        querySkill({variables: {where: {name}}}).then((res) => {
+            if (!res.data.skills.length) {
+                updateHelper()
+            } else {
+                if (res.data.skills[0].id == selectedSkills.id) {
+                    updateHelper()
+                } else {
+                    errorToast("Skill already registered")
+                }
+            }
         })
     }
 
@@ -201,7 +240,7 @@ const UpdateSkillComponent = () => {
                                 {allSkills}
                             </div>}
                     </> :
-                    <div className="h-fit w-80 text-xs">
+                    <form className="h-fit w-80 text-xs" onSubmit={(e) => { handleUpdateSkills(e) }}>
                         <div key={selectedSkills.id} className='flex flex-row py-2 cursor-pointer items-center relative mb-2'>
                             {
                                 !iconFile ?
@@ -244,8 +283,8 @@ const UpdateSkillComponent = () => {
                                     {allJobRoles}
                                 </div>}
                         </div>
-                        <button className="w-fit h-fit px-4 py-2 text-sm text-white font-medium border-none rounded-sm bg-red-500 mt-4 float-right" onClick={(e) => { handleUpdateSkills(e) }}>Update</button>
-                    </div>
+                        <button className="w-fit h-fit px-4 py-2 text-xs text-white font-medium border-none rounded-sm bg-red-500 mt-4 float-right">Update</button>
+                    </form>
             }
         </>
     )

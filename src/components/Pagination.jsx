@@ -76,26 +76,26 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
                         }
 
                         return (
-                            <div className="bg-bg_navy w-full h-32 border-b-2 border-gray-300 flex flex-row items-center" key={index}>
+                            <div className="bg-bg_navy w-full h-20 border-b-2 border-gray-300 flex flex-row items-center" key={index}>
                                 <div className="px-8 py-5 border-r-2 border-gray-300 h-full flex items-center">
-                                    <img className="h-14 w-14" src={item.photoURL} alt="" />
+                                    <img className="h-8 w-8" src={item.photoURL} alt="" />
                                 </div>
-                                <div className={`p-5 ${target.includes('skills') ? 'w-[13%]' : 'w-[16%]'} border-r-2 border-gray-300 h-full flex items-center`}>
-                                    <p className="font-bold cursor-pointer text-sm" onClick={() => { handleNavigateSkill() }}>
+                                <div className={`p-5 ${target.includes('skills') ? 'w-[13%]' : 'w-[22%]'} border-r-2 border-gray-300 h-full flex items-center`}>
+                                    <p className="font-medium cursor-pointer text-xs" onClick={() => { handleNavigateSkill() }}>
                                         {target.includes('skills') ? item.name : target == "people" ? item.displayName : item.projectName}
                                     </p>
                                 </div>
                                 <div className="p-5 w-[35%] border-r-2 border-gray-300 h-full flex items-center">
-                                    <p className="text-sm">{target.includes('skills') ? item.description : target == "people" ? item.bio : item.description}</p>
+                                    <p className="text-xs overflow-ellipsis whitespace-nowrap overflow-hidden">{target.includes('skills') ? item.description : target == "people" ? item.bio : item.description}</p>
                                 </div>
                                 {
                                     skillsRating ?
                                         <>
                                             <div className="p-5 w-[13%] border-r-2 border-gray-300 h-full flex items-center">
-                                                <p className="text-white flex justify-center items-center text-sm">{convertRatingToString(currentRatings[index])}</p>
+                                                <p className="text-white flex justify-center items-center text-xs">{convertRatingToString(currentRatings[index])}</p>
                                             </div>
                                             <div className="p-5 w-[10%] border-r-2 border-gray-300 h-full flex items-center">
-                                                <p id={item.id} className="text-white flex justify-center items-center text-sm font-semibold cursor-pointer"
+                                                <p id={item.id} className="text-orange-400 flex justify-center items-center text-xs font-semibold cursor-pointer"
                                                     onClick={(e) => {handleEditSkill(e)}}>Edit skill</p>
                                             </div>
                                         </> :
@@ -113,7 +113,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
     return (
         <div className={paginationStyle}>
             <Items currentItems={currentItems} target={target} />
-            <ReactPaginate className="flex flex-row w-fit bg-bg_navy float-right mt-5"
+            <ReactPaginate className="flex flex-row w-fit bg-bg_navy float-right mt-2 text-xs" 
                 breakLabel="..."
                 nextLabel="Next"
                 onPageChange={handlePageClick}
@@ -124,7 +124,7 @@ const Pagination = ({ itemsPerPage, items, paginationStyle, target, skillsRating
                 renderOnZeroPageCount={null}
                 pageClassName=""
                 activeLinkClassName="text-black bg-bg_light"
-                pageLinkClassName="flex justify-center items-center w-12 h-12"
+                pageLinkClassName="flex justify-center items-center w-10 h-10"
                 previousClassName="flex justify-center items-center px-5"
                 nextClassName="flex justify-center items-center px-5"
                 breakClassName="flex justify-center items-center"

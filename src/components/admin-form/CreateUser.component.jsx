@@ -73,14 +73,14 @@ const CreateUserComponent = () => {
 
     return (
         <>
-            <form action="submit" className="flex flex-col w-80" onSubmit={(e) => {handleCreateUser(e)}}>
-                <label className="text-sm mb-2">Email</label>
+            <form action="submit" className="flex flex-col w-80 text-xs" onSubmit={(e) => {handleCreateUser(e)}}>
+                <label className="text-xs mb-2">Email</label>
                 <input className="w-full mb-4 outline-none border-none px-3 py-2 text-black" required type="email" name="email" value={email}
                     onChange={(e) => {handleInputChange(e)}}/>
-                <label className="text-sm mb-2">Display Name</label>
+                <label className="text-xs mb-2">Display Name</label>
                 <input className="w-full mb-4 outline-none border-none px-3 py-2 text-black" required type="text" name="displayName" value={displayName}
                     onChange={(e) => {handleInputChange(e)}}/>
-                <button className="w-fit h-fit px-4 py-2 text-sm text-white font-medium border-none rounded-sm bg-sky-500 mt-2 self-end">Create</button>
+                <button className="w-fit h-fit px-4 py-2 text-xs text-white font-medium border-none rounded-sm bg-sky-500 mt-2 self-end">Create</button>
             </form>
         </>
     )

@@ -37,7 +37,7 @@ const Admin = () => {
         }
      }, [showAdmin])
 
-    const buttonClass = "w-fit h-fit px-4 py-2 text-sm text-white font-medium mr-3 border-none rounded-sm"
+    const buttonClass = "w-fit h-fit px-4 py-2 text-xs text-white font-medium mr-3 border-none rounded-sm"
 
     return (
         <>
@@ -46,11 +46,11 @@ const Admin = () => {
                     <>
                         {
                             authorized ?
-                                <div className="flex flex-col h-fit w-full px-12 py-32">
-                                    <div className="w-fit h-fit flex flex-col">
-                                        <DefaultModal className='w-fit' content={
+                                <div className="flex flex-col h-fit w-full px-12 py-24 text-xs">
+                                    <div className="w-full h-fit flex flex-row flex-wrap ">
+                                        <DefaultModal className='w-fit mr-3' content={
                                             <>
-                                                <p className="text-base font-medium mb-4 text-white">Edit Users</p>
+                                                <p className="font-medium mb-4 text-white">Edit Users</p>
                                                 <div className="flex flex-row w-fit h-fit">
                                                     <button className={`${buttonClass} bg-sky-500`} 
                                                         onClick={() => {dispatch(toggleAdmin(true)); setTarget('user'); setAction('Create')}}>Create User</button>
@@ -61,9 +61,9 @@ const Admin = () => {
                                                 </div>
                                             </>
                                         } />
-                                        <DefaultModal className='w-fit' content={
+                                        <DefaultModal className='w-fit mr-3' content={
                                             <>
-                                                <p className="text-base font-medium mb-4 text-white">Edit Skills</p>
+                                                <p className="font-medium mb-4 text-white">Edit Skills</p>
                                                 <div className="flex flex-row w-fit h-fit">
                                                     <button className={`${buttonClass} bg-sky-500`}
                                                         onClick={() => {dispatch(toggleAdmin(true)); setTarget('skill'); setAction('Create')}}>Create Skill</button>
@@ -74,9 +74,9 @@ const Admin = () => {
                                                 </div>
                                             </>
                                         } />
-                                        <DefaultModal className='w-fit' content={
+                                        <DefaultModal className='w-fit mr-3' content={
                                             <>
-                                                <p className="text-base font-medium mb-4 text-white">Edit Categories</p>
+                                                <p className="font-medium mb-4 text-white">Edit Categories</p>
                                                 <div className="flex flex-row w-fit h-fit">
                                                     <button className={`${buttonClass} bg-sky-500`}
                                                         onClick={() => {dispatch(toggleAdmin(true)); setTarget('category'); setAction('Create')}}>Create Category</button>
@@ -87,9 +87,9 @@ const Admin = () => {
                                                 </div>
                                             </>
                                         } />
-                                        <DefaultModal className='w-fit' content={
+                                        <DefaultModal className='w-fit mr-3' content={
                                             <>
-                                                <p className="text-base font-medium mb-4 text-white">Edit Job Roles</p>
+                                                <p className="font-medium mb-4 text-white">Edit Job Roles</p>
                                                 <div className="flex flex-row w-fit h-fit">
                                                     <button className={`${buttonClass} bg-sky-500`}
                                                         onClick={() => {dispatch(toggleAdmin(true)); setTarget('job'); setAction('Create')}}>Create Job Role</button>
@@ -104,12 +104,12 @@ const Admin = () => {
                                     {showAdmin && <AdminPanel target={target} action={action}/>}
                                 </div> :
                                 <div className="w-screen h-screen px-12 pb-28 flex flex-row items-center justify-center">
-                                    <a className="bg-bg_navy px-6 py-4 text-sm font-medium text-white rounded-lg">You do not have the authorization to this content</a>
+                                    <a className="bg-bg_navy px-6 py-4 text-xs font-medium text-white rounded-lg">You do not have the authorization to this content</a>
                                 </div>
                         }
                     </> :
                     <div className="w-screen h-screen px-12 pb-28 flex flex-row items-center justify-center">
-                        <a className="bg-bg_navy px-6 py-4 cursor-pointer text-sm font-medium text-white rounded-lg" href="/login">Login to view this content</a>
+                        <a className="bg-bg_navy px-6 py-4 cursor-pointer text-xs font-medium text-white rounded-lg" href="/login">Login to view this content</a>
                     </div>
             }
         </>

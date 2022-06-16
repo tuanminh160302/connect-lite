@@ -140,8 +140,8 @@ const AddSkills = ({ target, profileData }) => {
                 <PopUpModal
                     content={
                         <div className="relative">
-                            <p className="text-white font-semibold text-sm mb-4">Add Skill</p>
-                            <div className="relative">
+                            <p className="text-white font-semibold text-xs mb-4">Add Skill</p>
+                            <div className="relative text-xs">
                                 <input type="text" placeholder="Search skills" value={selectedSkill} name="skillSearch" autoComplete="off" onChange={(e) => { handleInputChange(e) }}
                                     onFocus={() => { setSearchFocus(true) }} onBlur={() => { setTimeout(() => { setSearchFocus(false) }, 150) }}
                                     className="border-b-2 border-black outline-none px-4 py-2 w-80" />
@@ -152,19 +152,19 @@ const AddSkills = ({ target, profileData }) => {
                                 <div className="w-80 max-h-72 overflow-auto bg-white absolute mt-1">
                                     {allSkills}
                                 </div>}
-                            <div className="w-full h-fit flex flex-row justify-between text-sm font-medium mt-4">
-                                <p id='1' className={`p-2 border-2 border-white cursor-pointer 
+                            <div className="w-full h-fit flex flex-row justify-between text-xs font-medium mt-4">
+                                <p id='1' className={`p-2 border-2 border-white cursor-pointer flex-grow
                         ${skillLevel != '1' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
                                     onClick={(e) => { handleSelectLevel(e) }}>Knowledgable</p>
-                                <p id='2' className={`p-2 border-2 border-white cursor-pointer 
+                                <p id='2' className={`p-2 border-2 border-white cursor-pointer flex-grow
                         ${skillLevel != '2' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
                                     onClick={(e) => { handleSelectLevel(e) }}>Proficient</p>
-                                <p id='3' className={`p-2 border-2 border-white cursor-pointer 
+                                <p id='3' className={`p-2 border-2 border-white cursor-pointer flex-grow
                         ${skillLevel != '3' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
                                     onClick={(e) => { handleSelectLevel(e) }}>Lead/Teach</p>
                             </div>
                             <button
-                                className="border-2 border-white text-white text-sm font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
+                                className="border-2 border-white text-white text-xs font-semibold py-2 px-4 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
                                 onClick={() => handleCreateUserToSkill()}>Add</button>
                         </div>} />
             }
@@ -173,31 +173,31 @@ const AddSkills = ({ target, profileData }) => {
                 <PopUpModal
                     content={
                         <div className="relative">
-                            <p className="text-white font-semibold text-sm mb-4">Edit Skill</p>
+                            <p className="text-white font-semibold text-xs mb-4">Edit Skill</p>
                             <>
                                 {
                                     skillToEditData ?
                                         <>
                                             <div className="relative">
-                                                <p className='text-sm text-white'>{skillToEditData.skills[0].name}</p>
+                                                <p className='text-xs text-white'>{skillToEditData.skills[0].name}</p>
                                             </div>
-                                            <div className="w-full h-fit flex flex-row justify-between text-sm font-medium mt-4">
+                                            <div className="w-full h-fit flex flex-row justify-between text-xs font-medium mt-4">
                                                 <p id='1' className={`p-2 border-2 border-white cursor-pointer 
                     ${skillLevel != '1' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
                                                     onClick={(e) => { handleSelectLevel(e) }}>Knowledgable</p>
                                                 <p id='2' className={`p-2 border-2 border-white cursor-pointer 
-                    ${skillLevel != '2' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
+                    ${skillLevel != '2' ? 'text-white hover:text-white transition duration-300 ease-in-out hover:bg-sky-600' : 'text-white bg-sky-600'}`}
                                                     onClick={(e) => { handleSelectLevel(e) }}>Proficient</p>
                                                 <p id='3' className={`p-2 border-2 border-white cursor-pointer 
-                    ${skillLevel != '3' ? 'text-white hover:text-black transition duration-300 ease-in-out hover:bg-white' : 'text-black bg-white'}`}
+                    ${skillLevel != '3' ? 'text-white hover:text-white transition duration-300 ease-in-out hover:bg-red-600' : 'text-white bg-red-600'}`}
                                                     onClick={(e) => { handleSelectLevel(e) }}>Lead/Teach</p>
                                             </div>
                                             <div>
                                                 <button
-                                                    className="border-2 border-white text-white text-sm font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
+                                                    className="border-2 border-white text-white text-xs font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
                                                     onClick={() => {handleCreateUserToSkill()}}>Update</button>
                                                 <button
-                                                    className="border-2 border-white text-white text-sm font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
+                                                    className="border-2 border-white text-white text-xs font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
                                                     onClick={() => {handleDeleteSkill()}}>Delete</button>
                                             </div>
                                         </> : <p>Loading...</p>
