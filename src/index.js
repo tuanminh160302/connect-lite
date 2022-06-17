@@ -22,7 +22,7 @@ const defaultOptions = {
 }
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
+  uri: 'https://6dms3bvx7c.execute-api.us-east-1.amazonaws.com/dev/',
   cache: new InMemoryCache(),
   defaultOptions: defaultOptions
 });

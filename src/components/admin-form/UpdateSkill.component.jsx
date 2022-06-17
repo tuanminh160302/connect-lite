@@ -123,7 +123,8 @@ const UpdateSkillComponent = () => {
                     }
                 }
             }
-            updateSkillInfo({ variables: { where: { id: selectedSkills.id }, update: skillObject, disconnect: skillDisconnectObject } })
+            updateSkillDisconnect({ variables: { where: { id: selectedSkills.id }, disconnect: skillDisconnectObject } }).then((res) => {
+                updateSkillInfo({ variables: { where: { id: selectedSkills.id }, update: skillObject } })
                 .then((res) => {
                     updateSkillConnect({variables: {where: {id: selectedSkills.id}, connect: skillConnectObject}}).then((res) => {
                         console.log(res)
@@ -131,12 +132,13 @@ const UpdateSkillComponent = () => {
                         handleExitUpdateSkill()
                     })
                 }).catch(err => console.log(err))
+            })
         })
     }
 
     const handleUpdateSkills = (e) => {
         e.preventDefault()
-        querySkill({variables: {where: {name}}}).then((res) => {
+        querySkill({ variables: { where: { name } } }).then((res) => {
             if (!res.data.skills.length) {
                 updateHelper()
             } else {
