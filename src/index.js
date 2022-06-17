@@ -22,7 +22,7 @@ const defaultOptions = {
 }
 
 const client = new ApolloClient({
-  uri: 'https://6dms3bvx7c.execute-api.us-east-1.amazonaws.com/dev/',
+  uri: `https://${process.env.REACT_APP_API_ENDPOINT}.connect-lite.xyz`,
   cache: new InMemoryCache(),
   defaultOptions: defaultOptions
 });
