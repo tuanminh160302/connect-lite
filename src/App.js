@@ -86,7 +86,7 @@ const App = () => {
   return (
     <UserContext.Provider value={{ user, userData }}>
       <div className='App bg-bg_light w-full h-fit flex flex-row'>
-        {/* {showPreloader ? <Preloader /> : null} */}
+        {showPreloader ? <Preloader /> : null}
         <div className="text-xs"><Toaster/></div>
         <Header />
         {
