@@ -95,7 +95,7 @@ const App = () => {
         }
         <Routes>
           <Route path='/login' element={<Login />}></Route>
-          <Route path='/dashboard' element={<Dashboard />}></Route>
+          {/* <Route path='/dashboard' element={<Dashboard />}></Route> */}
           <Route path='/people' element={<People />}></Route>
           <Route path='/people/:username' element={<Profile />}></Route>
           <Route path='/projects' element={<Project />}></Route>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import PopUpModal from "./PopupModal.component"
 import { ReactComponent as DeleteSVG } from '../assets/x.svg'
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client/react"
@@ -7,11 +7,13 @@ import { useLocation } from "react-router"
 import { successToast, errorToast } from "../lib/toast"
 import { useDispatch, useSelector } from "react-redux/es/exports"
 import { toggleAddSkill, toggleEditSkill } from "../redux/popUp.slice"
+import { UserContext } from "../lib/context"
 
 const AddSkills = ({ target, profileData }) => {
 
     const location = useLocation()
     const dispatch = useDispatch()
+    const {user, userData} = useContext(UserContext)
 
     const pathnameArr = location.pathname.split('/')
     const profileUsername = pathnameArr[pathnameArr.length - 1]
@@ -92,20 +94,24 @@ const AddSkills = ({ target, profileData }) => {
     }, [showEditSkill])
 
     const handleCreateUserToSkill = () => {
-        console.log(selectedSkillId)
-        querySkill({ variables: { where: {OR: [{id: selectedSkillId}, {name: selectedSkill}]}} }).then((res) => {
-            console.log(res)
-            if (res.data.skills.length) {
-                createUserToSkill({
-                    variables: { where: { uid: profileData.uid }, connect: { hasSkill: [{ where: { node: { name: selectedSkill } }, edge: { level: parseInt(skillLevel) } }] } },
-                }).then(() => {
-                        successToast("Skillset updated")
-                        dispatch(toggleAddSkill(false))
-                    }).catch(err => console.log(err.name))
-            } else {
-                errorToast("Skill not found")
-            }
-        })
+        if (profileData.uid === userData.uid) {
+            console.log(selectedSkillId)
+            querySkill({ variables: { where: {OR: [{id: selectedSkillId}, {name: selectedSkill}]}} }).then((res) => {
+                console.log(res)
+                if (res.data.skills.length) {
+                    createUserToSkill({
+                        variables: { where: { uid: profileData.uid }, connect: { hasSkill: [{ where: { node: { name: selectedSkill } }, edge: { level: parseInt(skillLevel) } }] } },
+                    }).then(() => {
+                            successToast("Skillset updated")
+                            dispatch(toggleAddSkill(false))
+                        }).catch(err => console.log(err.name))
+                } else {
+                    errorToast("Skill not found")
+                }
+            })
+        } else {
+            errorToast("Not authorized")
+        }
     }
 
     const handleSelectLevel = (e) => {
@@ -205,7 +211,7 @@ const AddSkills = ({ target, profileData }) => {
                                                     className="border-2 border-white text-white text-xs font-semibold py-2 px-6 float-right mt-4 hover:bg-white hover:text-black transition duration-300 ease-in-out"
                                                     onClick={() => {handleDeleteSkill()}}>Delete</button>
                                             </div>
-                                        </> : <p>Loading...</p>
+                                        </> : <p className="text-sm text-white">Loading...</p>
                                 }
                             </>
                         </div>} />

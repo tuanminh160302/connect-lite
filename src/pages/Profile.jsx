@@ -64,7 +64,10 @@ const Profile = () => {
                                 <div className="flex flex-col h-fit w-full">
                                     <div className="flex flex-row h-fit w-fit items-center mb-6">
                                         <p className="text-black text-xs font-semibold">Skills and Certifications</p>
-                                        <EditSVG className="h-5 w-auto fill-bg_navy ml-2 cursor-pointer" onClick={() => { handleAddSkill() }} />
+                                        {
+                                            profileData.uid === userData.uid ?
+                                            <EditSVG className="h-5 w-auto fill-bg_navy ml-2 cursor-pointer" onClick={() => { handleAddSkill() }} /> : null
+                                        }
                                     </div>
                                     {userAllSkillsData.data && userAllSkillsData.data.users[0].hasSkillConnection.edges.length ?
                                         <>

@@ -7,15 +7,19 @@ import { ReactComponent as SkillsSVG } from '../assets/skills.svg'
 import { ReactComponent as AdminSVG } from '../assets/admin.svg'
 import OptionInModal from './OptionInModal.component'
 import { useLocation, useNavigate } from 'react-router'
+import { UserContext } from '../lib/context'
+import { useContext } from 'react'
 
 const MenuPanel = () => {
 
+    const {user, userData} = useContext(UserContext)
     const location = useLocation()
     const navigate = useNavigate()
     const divStyle = "w-full h-fit py-4 px-8 flex flex-row items-center cursor-pointer hover:bg-black transition ease-in-out duration-300 mt-2"
     const SVGStyle = "h-4 w-4 cursor-pointer fill-white"
     const textStyle = "text-xs font-medium text-white ml-2"
-    const sections = ["Dashboard", "People", "Projects", "Skills", "Admin"]
+    const sections = ["Profile", "People", "Projects", "Skills", "Admin"]
+    // const sections = ["Dashboard", "People", "Projects", "Skills", "Admin"]
     const sectionsSVG = [DashboardSVG, PeopleSVG, ProjectsSVG, SkillsSVG, AdminSVG]
 
     return (
@@ -35,7 +39,7 @@ const MenuPanel = () => {
                                 description={section}
                                 SVGStyle={SVGStyle}
                                 textStyle={textStyle}
-                                onClick={() => { navigate(url) }} />
+                                onClick={section !== "Profile" ? () => { navigate(url) } : () => { navigate(`/people/${userData.username}`) }} />
                         </div>
                     )
                 })
