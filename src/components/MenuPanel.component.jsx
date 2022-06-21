@@ -12,7 +12,7 @@ import { useContext } from 'react'
 
 const MenuPanel = () => {
 
-    const {user, userData} = useContext(UserContext)
+    const { user, userData } = useContext(UserContext)
     const location = useLocation()
     const navigate = useNavigate()
     const divStyle = "w-full h-fit py-4 px-8 flex flex-row items-center cursor-pointer hover:bg-black transition ease-in-out duration-300 mt-2"
@@ -29,20 +29,25 @@ const MenuPanel = () => {
                 <a className={`header-actions text-white ml-4 mr-4 w-fit`} href="/">Connect</a>
             </div>
             {
-                sections.map((section, index) => {
-                    const url = '/'+section.toLowerCase()
-                    return (
-                        <div key={index}>
-                            <OptionInModal
-                                divStyle={divStyle}
-                                SVG={sectionsSVG[index]}
-                                description={section}
-                                SVGStyle={SVGStyle}
-                                textStyle={textStyle}
-                                onClick={section !== "Profile" ? () => { navigate(url) } : () => { navigate(`/people/${userData.username}`) }} />
-                        </div>
-                    )
-                })
+                userData &&
+                <>
+                    {
+                        sections.map((section, index) => {
+                            const url = '/' + section.toLowerCase()
+                            return (
+                                <div key={index}>
+                                    <OptionInModal
+                                        divStyle={divStyle}
+                                        SVG={sectionsSVG[index]}
+                                        description={section}
+                                        SVGStyle={SVGStyle}
+                                        textStyle={textStyle}
+                                        onClick={section !== "Profile" ? () => { navigate(url) } : () => { navigate(`/people/${userData.username}`) }} />
+                                </div>
+                            )
+                        })
+                    }
+                </>
             }
             <div className='absolute w-full h-fit bottom-5 flex flex-row items-center justify-between px-6'>
 

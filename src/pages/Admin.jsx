@@ -26,7 +26,9 @@ const Admin = () => {
 
     useEffect(() => {
         if (user && queryAdmin.data) {
-            setAuthorized(user.uid == queryAdmin.data.admins[0].uid)
+            queryAdmin.data.admins.forEach((admin) => {
+                user.uid === admin.uid && setAuthorized(true)
+            })
         }
     }, [user, queryAdmin.data])
 
